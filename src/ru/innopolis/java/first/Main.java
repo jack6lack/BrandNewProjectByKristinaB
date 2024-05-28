@@ -30,8 +30,8 @@ public class Main {
         String player1 = "вася";
         String player2 = "петя";
 
-        int i = random1.nextInt(2);
-        int o = random2.nextInt(2);
+        int i = random1.nextInt(3);
+        int o = random2.nextInt(3);
 
         String iS = String.valueOf(i);
         String oS = String.valueOf(o);
