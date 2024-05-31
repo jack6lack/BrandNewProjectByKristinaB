@@ -9,16 +9,6 @@ import java.util.Random;
 public class Main {
 
     public static void main(String[] args) throws InterruptedException {
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.println("имя");
-//        String name = scanner.nextLine();
-//
-//        int start = 1;
-//        int end = 5;
-//
-//        for (int i = start; i < end; i++) {
-//            System.out.println("hey, " + name);
-//        }
 
         //1
         System.out.println(4 + " " + 6 + " " + 2 + " " + 99);
