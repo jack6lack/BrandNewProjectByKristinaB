@@ -23,10 +23,10 @@ public class MainToo {
         String word = scanner.next();
         System.out.println("а тут цифру: ");
         int count = scanner.nextInt();
-        String alsoWord = word;
+        StringBuilder stringBuilder = new StringBuilder(word);
         for (int i = 0; i < count; i++) {
-            System.out.println(word);
-            word = word + alsoWord;
+            System.out.println(stringBuilder);
+            stringBuilder.append(word);
         }
 
         //4
