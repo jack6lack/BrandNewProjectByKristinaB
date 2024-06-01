@@ -12,7 +12,7 @@ public class MainToo {
         makeCelsius(f);
 
         //2
-        System.out.println("число рас: wegwgw");
+        System.out.println("число рас: ");
         int a = scanner.nextInt();
         System.out.println("число два: ");
         int b = scanner.nextInt();

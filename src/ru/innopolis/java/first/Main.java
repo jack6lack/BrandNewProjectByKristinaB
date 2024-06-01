@@ -16,7 +16,7 @@ public class Main {
         Random random1 = new Random();
         Random random2 = new Random();
 
-        String[] variants = {"камень", "ножниwsdvweцы", "бумага"};
+        String[] variants = {"камень", "ножницы", "бумага"};
         String player1 = "вася";
         String player2 = "петя";
 
