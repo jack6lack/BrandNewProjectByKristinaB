@@ -1,7 +1,11 @@
-### IntelliJ IDEA ###
+# Default ignored files
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
+
+##IntellijIDEA##
+.idea/
+*.iml
 
 ### Eclipse ###
 .apt_generated
@@ -24,6 +28,3 @@ bin/
 
 ### VS Code ###
 .vscode/
-
-### Mac OS ###
-.DS_Store
