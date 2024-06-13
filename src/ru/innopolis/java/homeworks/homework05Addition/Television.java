@@ -1,4 +1,4 @@
-package ru.innopolis.java.third;
+package ru.innopolis.java.homeworks.homework05Addition;
 
 public class Television {
     private String model;
