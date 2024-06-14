@@ -1,5 +1,7 @@
 package ru.innopolis.java.homeworks.homework05Addition;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -8,60 +10,29 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
 
-        Television tv1 = new Television();
-        tv1.setModel("sumsuk");
-        tv1.setSmart(true);
-        tv1.setDiscount(15);
-        tv1.setPriceWithoutDiscount(100_000);
-        System.out.println(tv1);
+        //1 - создается массив телевизоров, добавление новых элементов происходит в цикле
+        Television[] televisions = new Television[10];
 
-        Television tv2 = new Television("lgeee", 30_000, 0, false);
-        System.out.println(tv2);
-
-        Television tv3 = new Television("xixiomi", 49_999, 4.99, true);
-        System.out.println(tv3);
-
-        Television tv4 = new Television();
-        System.out.println("введите желаемую модель: ");
-        tv4.setModel(scanner.next());
-        System.out.println("введите желаемую цену: ");
-        tv4.setPriceWithoutDiscount(scanner.nextDouble());
-        System.out.println("введите желаемую скидку: ");
-        tv4.setDiscount(scanner.nextDouble());
-        System.out.println("вам необходимы смарт функции? ( y / n )");
-        if (scanner.next().equals("y")) {
-            tv4.setSmart(true);
-        } else {
-            tv4.setSmart(false);
+        for (int i = 0; i < televisions.length; i++) {
+            televisions[i] = new Television("theCoolestTV" + i, random.nextInt(100_000),
+                    random.nextInt(100), random.nextBoolean(), random.nextInt(100), random.nextInt(0, 101), random.nextBoolean());
         }
-        System.out.println("ваша итоговая цена: " + tv4.getFinalPrice());
-        System.out.println(tv4);
-
-        Television tv5 = new Television();
-        StringBuilder stringBuilder = new StringBuilder();
-        System.out.println("хотите случайный телевизор? (y / n)");
-        String st = scanner.next();
-        if (st.equals("y")) {
-            for (int i = 0; i < random.nextInt(5, 26); i++) {
-                stringBuilder.append(tv5.getAlphabet()[random.nextInt(26)]);
+        //2 - в цикле выводятся только те тв, чей уровень громкости меньше или равен допустимому (что вводится с клавиатуры) И те, что включены
+        System.out.println("введите уровень допустимого значения громкости звука (рекомендованный уровень: от 50 до 70)");
+        int maxVolume = scanner.nextInt();
+        for (Television television : televisions) {
+            if (television.getVolumeLevel() <= maxVolume && television.isTurnedOn()) {
+                System.out.println(television);
             }
-            tv5.setModel(stringBuilder.toString());
-            System.out.println("полученная модель: " + tv5.getModel());
-            tv5.setPriceWithoutDiscount(Math.abs(random.nextInt(1_000, 1_000_000)));
-            System.out.println("полученная цена: " + tv5.getPriceWithoutDiscount());
-            tv5.setDiscount(Math.abs(random.nextInt(100)));
-            System.out.println("полученная скидка: " + tv5.getDiscount());
-            System.out.println("ваша итоговая цена: " + tv5.getFinalPrice());
-            tv5.setSmart(random.nextBoolean());
-        } else if (st.equals("n")) {
-            System.out.println("ну и ладно, нет так нет");
-        } else {
-            System.out.println("в следующий раз читайте внимательнее, магии не будет");
         }
-        if (tv5.getModel() == null) {
-            System.out.println("пака");
-        } else {
-            System.out.println(tv5);
-        }
+        //3 - сортировка по выбранному каналу (с выводом, чтобы было наглядно)
+        System.out.println("приготовьтесь к сортировке по номеру канала: ");
+        Arrays.sort(televisions, new Comparator<Television>() { //я уже посмотрела, шо тут надо делать через лямбды, но мне пока так понятнее
+            @Override
+            public int compare(Television o1, Television o2) {
+                return Integer.compare(o1.getChannelNumber(), o2.getChannelNumber());
+            }
+        });
+        System.out.println(Arrays.toString(televisions));
     }
 }

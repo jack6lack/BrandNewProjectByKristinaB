@@ -1,5 +1,8 @@
 package ru.innopolis.java.homeworks.homework05Addition;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public class Television {
     private String model;
     private double priceWithoutDiscount;
@@ -7,18 +10,19 @@ public class Television {
     private double discount;
     private boolean isSmart;
     private final String[] alphabet = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+    private int channelNumber;
+    private int volumeLevel;
+    private boolean isTurnedOn;
 
-    //если юзер не знает какой телек
-    public Television() {
-    }
-
-    //если юзер знает
-    public Television(String model, double priceWithoutDiscount, double discount, boolean isSmart) {
+    public Television(String model, double priceWithoutDiscount, double discount, boolean isSmart, int channelNumber, int volumeLevel, boolean isTurnedOn) {
         this.model = model;
-        this.discount = discount;
         this.priceWithoutDiscount = priceWithoutDiscount;
-        this.isSmart = isSmart;
+        this.discount = discount;
         this.finalPrice = getFinalPrice();
+        this.isSmart = isSmart;
+        this.channelNumber = channelNumber;
+        this.volumeLevel = volumeLevel;
+        this.isTurnedOn = isTurnedOn;
     }
 
     public String getModel() {
@@ -66,14 +70,54 @@ public class Television {
         return alphabet;
     }
 
+    public int getChannelNumber() {
+        return channelNumber;
+    }
+
+    public void setChannelNumber(int channelNumber) {
+        this.channelNumber = channelNumber;
+    }
+
+    public int getVolumeLevel() {
+        return volumeLevel;
+    }
+
+    public void setVolumeLevel(int volumeLevel) {
+        this.volumeLevel = volumeLevel;
+    }
+
+    public boolean isTurnedOn() {
+        return isTurnedOn;
+    }
+
+    public void setTurnedOn(boolean turnedOn) {
+        isTurnedOn = turnedOn;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Television that)) return false;
+        return Double.compare(priceWithoutDiscount, that.priceWithoutDiscount) == 0 && Double.compare(finalPrice, that.finalPrice) == 0 && Double.compare(discount, that.discount) == 0 && isSmart == that.isSmart && channelNumber == that.channelNumber && volumeLevel == that.volumeLevel && isTurnedOn == that.isTurnedOn && Objects.equals(model, that.model) && Objects.deepEquals(alphabet, that.alphabet);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(model, priceWithoutDiscount, finalPrice, discount, isSmart, Arrays.hashCode(alphabet), channelNumber, volumeLevel, isTurnedOn);
+    }
+
     @Override
     public String toString() {
-        return "TV <" +
-                " модель '" + model + '\'' +
-                ", цена " + priceWithoutDiscount + " р." +
+        return "Television < " +
+                " модель : '" + model + '\'' +
+                ", цена : " + priceWithoutDiscount + " р." +
                 ", скидка составляет: " + discount + "%" +
                 ", ваша финальная цена составляет: " + getFinalPrice() + " p." +
                 (isSmart ? ", смарт тв" : ", не смарт тв") +
-                '>';
+                ", текущий канал: " + channelNumber +
+                ", текущий уровень звука: " + volumeLevel +
+                (isTurnedOn ? ", телевизор включен" : ", телевизор выключен") +
+                ", hashCode: " + hashCode() +
+                " > ";
     }
 }
