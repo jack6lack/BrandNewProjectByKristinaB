@@ -47,7 +47,7 @@ public class Television {
 
     public void setDiscount(double discount) {
         if (discount > 100) {
-            System.out.println("больше всего в этой жизни вас радует то, что воздух бесплатный. ваша скидка будет 0%");
+            System.out.println("Р±РѕР»СЊС€Рµ РІСЃРµРіРѕ РІ СЌС‚РѕР№ Р¶РёР·РЅРё РІР°СЃ СЂР°РґСѓРµС‚ С‚Рѕ, С‡С‚Рѕ РІРѕР·РґСѓС… Р±РµСЃРїР»Р°С‚РЅС‹Р№. РІР°С€Р° СЃРєРёРґРєР° Р±СѓРґРµС‚ 0%");
             this.discount = 0;
         } else {
             this.discount = discount;
@@ -109,15 +109,14 @@ public class Television {
     @Override
     public String toString() {
         return "Television < " +
-                " модель : '" + model + '\'' +
-                ", цена : " + priceWithoutDiscount + " р." +
-                ", скидка составляет: " + discount + "%" +
-                ", ваша финальная цена составляет: " + getFinalPrice() + " p." +
-                (isSmart ? ", смарт тв" : ", не смарт тв") +
-                ", текущий канал: " + channelNumber +
-                ", текущий уровень звука: " + volumeLevel +
-                (isTurnedOn ? ", телевизор включен" : ", телевизор выключен") +
-                ", hashCode: " + hashCode() +
+                " РјРѕРґРµР»СЊ : '" + model + '\'' +
+                ", С†РµРЅР° : " + priceWithoutDiscount + " СЂ." +
+                ", СЃРєРёРґРєР° СЃРѕСЃС‚Р°РІР»СЏРµС‚: " + discount + "%" +
+                ", РІР°С€Р° С„РёРЅР°Р»СЊРЅР°СЏ С†РµРЅР° СЃРѕСЃС‚Р°РІР»СЏРµС‚: " + getFinalPrice() + " p." +
+                (isSmart ? ", СЃРјР°СЂС‚ С‚РІ" : ", РЅРµ СЃРјР°СЂС‚ С‚РІ") +
+                ", С‚РµРєСѓС‰РёР№ РєР°РЅР°Р»: " + channelNumber +
+                ", С‚РµРєСѓС‰РёР№ СѓСЂРѕРІРµРЅСЊ Р·РІСѓРєР°: " + volumeLevel +
+                (isTurnedOn ? ", С‚РµР»РµРІРёР·РѕСЂ РІРєР»СЋС‡РµРЅ" : ", С‚РµР»РµРІРёР·РѕСЂ РІС‹РєР»СЋС‡РµРЅ") +
                 " > ";
     }
 }

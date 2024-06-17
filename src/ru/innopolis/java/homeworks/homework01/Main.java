@@ -3,7 +3,7 @@ package ru.innopolis.java.homeworks.homework01;
 import java.util.Random;
 
 /**
- * вау!
+ * РІР°Сѓ!
  */
 
 public class Main {
@@ -16,9 +16,9 @@ public class Main {
         Random random1 = new Random();
         Random random2 = new Random();
 
-        String[] variants = {"камень", "ножницы", "бумага"};
-        String player1 = "вася";
-        String player2 = "петя";
+        String[] variants = {"РєР°РјРµРЅСЊ", "РЅРѕР¶РЅРёС†С‹", "Р±СѓРјР°РіР°"};
+        String player1 = "РІР°СЃСЏ";
+        String player2 = "РїРµС‚СЏ";
 
         int i = random1.nextInt(3);
         int o = random2.nextInt(3);
@@ -40,17 +40,17 @@ public class Main {
                 winner = player2;
                 break;
             default:
-                System.out.println("ничья!");
+                System.out.println("РЅРёС‡СЊСЏ!");
                 break;
         }
 
         if (winner != null) {
-            System.out.println(winner + " побеждает!");
+            System.out.println(winner + " РїРѕР±РµР¶РґР°РµС‚!");
         }
     }
 
     private static void rollFigure(String name, String variant) throws InterruptedException {
-        System.out.print(name + " бросает...");
+        System.out.print(name + " Р±СЂРѕСЃР°РµС‚...");
         Thread.sleep(2000);
         System.out.println(variant + "!");
     }

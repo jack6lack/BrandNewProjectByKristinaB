@@ -22,44 +22,44 @@ public class App {
         System.out.println(tv3);
 
         Television tv4 = new Television();
-        System.out.println("введите желаемую модель: ");
+        System.out.println("РІРІРµРґРёС‚Рµ Р¶РµР»Р°РµРјСѓСЋ РјРѕРґРµР»СЊ: ");
         tv4.setModel(scanner.next());
-        System.out.println("введите желаемую цену: ");
+        System.out.println("РІРІРµРґРёС‚Рµ Р¶РµР»Р°РµРјСѓСЋ С†РµРЅСѓ: ");
         tv4.setPriceWithoutDiscount(scanner.nextDouble());
-        System.out.println("введите желаемую скидку: ");
+        System.out.println("РІРІРµРґРёС‚Рµ Р¶РµР»Р°РµРјСѓСЋ СЃРєРёРґРєСѓ: ");
         tv4.setDiscount(scanner.nextDouble());
-        System.out.println("вам необходимы смарт функции? ( y / n )");
+        System.out.println("РІР°Рј РЅРµРѕР±С…РѕРґРёРјС‹ СЃРјР°СЂС‚ С„СѓРЅРєС†РёРё? ( y / n )");
         if (scanner.next().equals("y")) {
             tv4.setSmart(true);
         } else {
             tv4.setSmart(false);
         }
-        System.out.println("ваша итоговая цена: " + tv4.getFinalPrice());
+        System.out.println("РІР°С€Р° РёС‚РѕРіРѕРІР°СЏ С†РµРЅР°: " + tv4.getFinalPrice());
         System.out.println(tv4);
 
         Television tv5 = new Television();
         StringBuilder stringBuilder = new StringBuilder();
-        System.out.println("хотите случайный телевизор? (y / n)");
+        System.out.println("С…РѕС‚РёС‚Рµ СЃР»СѓС‡Р°Р№РЅС‹Р№ С‚РµР»РµРІРёР·РѕСЂ? (y / n)");
         String st = scanner.next();
         if (st.equals("y")) {
             for (int i = 0; i < random.nextInt(5, 26); i++) {
                 stringBuilder.append(tv5.getAlphabet()[random.nextInt(26)]);
             }
             tv5.setModel(stringBuilder.toString());
-            System.out.println("полученная модель: " + tv5.getModel());
+            System.out.println("РїРѕР»СѓС‡РµРЅРЅР°СЏ РјРѕРґРµР»СЊ: " + tv5.getModel());
             tv5.setPriceWithoutDiscount(Math.abs(random.nextInt(1_000, 1_000_000)));
-            System.out.println("полученная цена: " + tv5.getPriceWithoutDiscount());
+            System.out.println("РїРѕР»СѓС‡РµРЅРЅР°СЏ С†РµРЅР°: " + tv5.getPriceWithoutDiscount());
             tv5.setDiscount(Math.abs(random.nextInt(100)));
-            System.out.println("полученная скидка: " + tv5.getDiscount());
-            System.out.println("ваша итоговая цена: " + tv5.getFinalPrice());
+            System.out.println("РїРѕР»СѓС‡РµРЅРЅР°СЏ СЃРєРёРґРєР°: " + tv5.getDiscount());
+            System.out.println("РІР°С€Р° РёС‚РѕРіРѕРІР°СЏ С†РµРЅР°: " + tv5.getFinalPrice());
             tv5.setSmart(random.nextBoolean());
         } else if (st.equals("n")) {
-            System.out.println("ну и ладно, нет так нет");
+            System.out.println("РЅСѓ Рё Р»Р°РґРЅРѕ, РЅРµС‚ С‚Р°Рє РЅРµС‚");
         } else {
-            System.out.println("в следующий раз читайте внимательнее, магии не будет");
+            System.out.println("РІ СЃР»РµРґСѓСЋС‰РёР№ СЂР°Р· С‡РёС‚Р°Р№С‚Рµ РІРЅРёРјР°С‚РµР»СЊРЅРµРµ, РјР°РіРёРё РЅРµ Р±СѓРґРµС‚");
         }
         if (tv5.getModel() == null) {
-            System.out.println("пака");
+            System.out.println("РїР°РєР°");
         } else {
             System.out.println(tv5);
         }

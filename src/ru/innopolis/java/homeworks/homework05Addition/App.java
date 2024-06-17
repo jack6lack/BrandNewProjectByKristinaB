@@ -10,24 +10,24 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
 
-        //1 - создается массив телевизоров, добавление новых элементов происходит в цикле
+        //1 - СЃРѕР·РґР°РµС‚СЃСЏ РјР°СЃСЃРёРІ С‚РµР»РµРІРёР·РѕСЂРѕРІ, РґРѕР±Р°РІР»РµРЅРёРµ РЅРѕРІС‹С… СЌР»РµРјРµРЅС‚РѕРІ РїСЂРѕРёСЃС…РѕРґРёС‚ РІ С†РёРєР»Рµ
         Television[] televisions = new Television[10];
 
         for (int i = 0; i < televisions.length; i++) {
             televisions[i] = new Television("theCoolestTV" + i, random.nextInt(100_000),
                     random.nextInt(100), random.nextBoolean(), random.nextInt(100), random.nextInt(0, 101), random.nextBoolean());
         }
-        //2 - в цикле выводятся только те тв, чей уровень громкости меньше или равен допустимому (что вводится с клавиатуры) И те, что включены
-        System.out.println("введите уровень допустимого значения громкости звука (рекомендованный уровень: от 50 до 70)");
+        //2 - РІ С†РёРєР»Рµ РІС‹РІРѕРґСЏС‚СЃСЏ С‚РѕР»СЊРєРѕ С‚Рµ С‚РІ, С‡РµР№ СѓСЂРѕРІРµРЅСЊ РіСЂРѕРјРєРѕСЃС‚Рё РјРµРЅСЊС€Рµ РёР»Рё СЂР°РІРµРЅ РґРѕРїСѓСЃС‚РёРјРѕРјСѓ (С‡С‚Рѕ РІРІРѕРґРёС‚СЃСЏ СЃ РєР»Р°РІРёР°С‚СѓСЂС‹) Р С‚Рµ, С‡С‚Рѕ РІРєР»СЋС‡РµРЅС‹
+        System.out.println("РІРІРµРґРёС‚Рµ СѓСЂРѕРІРµРЅСЊ РґРѕРїСѓСЃС‚РёРјРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ РіСЂРѕРјРєРѕСЃС‚Рё Р·РІСѓРєР° (СЂРµРєРѕРјРµРЅРґРѕРІР°РЅРЅС‹Р№ СѓСЂРѕРІРµРЅСЊ: РѕС‚ 50 РґРѕ 70)");
         int maxVolume = scanner.nextInt();
         for (Television television : televisions) {
             if (television.getVolumeLevel() <= maxVolume && television.isTurnedOn()) {
                 System.out.println(television);
             }
         }
-        //3 - сортировка по выбранному каналу (с выводом, чтобы было наглядно)
-        System.out.println("приготовьтесь к сортировке по номеру канала: ");
-        Arrays.sort(televisions, new Comparator<Television>() { //я уже посмотрела, шо тут надо делать через лямбды, но мне пока так понятнее
+        //3 - СЃРѕСЂС‚РёСЂРѕРІРєР° РїРѕ РІС‹Р±СЂР°РЅРЅРѕРјСѓ РєР°РЅР°Р»Сѓ (СЃ РІС‹РІРѕРґРѕРј, С‡С‚РѕР±С‹ Р±С‹Р»Рѕ РЅР°РіР»СЏРґРЅРѕ)
+        System.out.println("РїСЂРёРіРѕС‚РѕРІСЊС‚РµСЃСЊ Рє СЃРѕСЂС‚РёСЂРѕРІРєРµ РїРѕ РЅРѕРјРµСЂСѓ РєР°РЅР°Р»Р°: ");
+        Arrays.sort(televisions, new Comparator<Television>() { //СЏ СѓР¶Рµ РїРѕСЃРјРѕС‚СЂРµР»Р°, С€Рѕ С‚СѓС‚ РЅР°РґРѕ РґРµР»Р°С‚СЊ С‡РµСЂРµР· Р»СЏРјР±РґС‹, РЅРѕ РјРЅРµ РїРѕРєР° С‚Р°Рє РїРѕРЅСЏС‚РЅРµРµ
             @Override
             public int compare(Television o1, Television o2) {
                 return Integer.compare(o1.getChannelNumber(), o2.getChannelNumber());
