@@ -1,4 +1,4 @@
-package ru.innopolis.java.third;
+package ru.innopolis.java.homeworks.homework03;
 
 public class Television {
     private String model;
@@ -8,11 +8,11 @@ public class Television {
     private boolean isSmart;
     private final String[] alphabet = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
 
-    //если юзер не знает какой телек
+    //РµСЃР»Рё СЋР·РµСЂ РЅРµ Р·РЅР°РµС‚ РєР°РєРѕР№ С‚РµР»РµРє
     public Television() {
     }
 
-    //если юзер знает
+    //РµСЃР»Рё СЋР·РµСЂ Р·РЅР°РµС‚
     public Television(String model, double priceWithoutDiscount, double discount, boolean isSmart) {
         this.model = model;
         this.discount = discount;
@@ -43,7 +43,7 @@ public class Television {
 
     public void setDiscount(double discount) {
         if (discount > 100) {
-            System.out.println("больше всего в этой жизни вас радует то, что воздух бесплатный. ваша скидка будет 0%");
+            System.out.println("Р±РѕР»СЊС€Рµ РІСЃРµРіРѕ РІ СЌС‚РѕР№ Р¶РёР·РЅРё РІР°СЃ СЂР°РґСѓРµС‚ С‚Рѕ, С‡С‚Рѕ РІРѕР·РґСѓС… Р±РµСЃРїР»Р°С‚РЅС‹Р№. РІР°С€Р° СЃРєРёРґРєР° Р±СѓРґРµС‚ 0%");
             this.discount = 0;
         } else {
             this.discount = discount;
@@ -69,11 +69,11 @@ public class Television {
     @Override
     public String toString() {
         return "TV <" +
-                " модель '" + model + '\'' +
-                ", цена " + priceWithoutDiscount + " р." +
-                ", скидка составляет: " + discount + "%" +
-                ", ваша финальная цена составляет: " + getFinalPrice() + " p." +
-                (isSmart ? ", смарт тв" : ", не смарт тв") +
+                " РјРѕРґРµР»СЊ '" + model + '\'' +
+                ", С†РµРЅР° " + priceWithoutDiscount + " СЂ." +
+                ", СЃРєРёРґРєР° СЃРѕСЃС‚Р°РІР»СЏРµС‚: " + discount + "%" +
+                ", РІР°С€Р° С„РёРЅР°Р»СЊРЅР°СЏ С†РµРЅР° СЃРѕСЃС‚Р°РІР»СЏРµС‚: " + getFinalPrice() + " p." +
+                (isSmart ? ", СЃРјР°СЂС‚ С‚РІ" : ", РЅРµ СЃРјР°СЂС‚ С‚РІ") +
                 '>';
     }
 }

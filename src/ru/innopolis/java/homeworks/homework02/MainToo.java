@@ -1,4 +1,4 @@
-package ru.innopolis.java.second;
+package ru.innopolis.java.homeworks.homework02;
 
 
 import java.util.Scanner;
@@ -7,21 +7,21 @@ public class MainToo {
     public static void main(String[] args) {
         //1
         Scanner scanner = new Scanner(System.in);
-        System.out.println("введите степень в градусах фаренгейта: ");
+        System.out.println("РІРІРµРґРёС‚Рµ СЃС‚РµРїРµРЅСЊ РІ РіСЂР°РґСѓСЃР°С… С„Р°СЂРµРЅРіРµР№С‚Р°: ");
         float f = scanner.nextFloat();
         makeCelsius(f);
 
         //2
-        System.out.println("число рас: ");
+        System.out.println("С‡РёСЃР»Рѕ СЂР°СЃ: ");
         int a = scanner.nextInt();
-        System.out.println("число два: ");
+        System.out.println("С‡РёСЃР»Рѕ РґРІР°: ");
         int b = scanner.nextInt();
         makeLotsMaths(a, b);
 
         //3
-        System.out.println("введем тут слово и посмотрим, что будет: ");
+        System.out.println("РІРІРµРґРµРј С‚СѓС‚ СЃР»РѕРІРѕ Рё РїРѕСЃРјРѕС‚СЂРёРј, С‡С‚Рѕ Р±СѓРґРµС‚: ");
         String word = scanner.next();
-        System.out.println("а тут цифру: ");
+        System.out.println("Р° С‚СѓС‚ С†РёС„СЂСѓ: ");
         int count = scanner.nextInt();
         StringBuilder stringBuilder = new StringBuilder(word);
         for (int i = 0; i < count; i++) {
@@ -30,7 +30,7 @@ public class MainToo {
         }
 
         //4
-        System.out.println("сначала символ, потом цифру, получится сетка");
+        System.out.println("СЃРЅР°С‡Р°Р»Р° СЃРёРјРІРѕР», РїРѕС‚РѕРј С†РёС„СЂСѓ, РїРѕР»СѓС‡РёС‚СЃСЏ СЃРµС‚РєР°");
         String someElement = scanner.next();
         int columnsAndLines = scanner.nextInt();
         for (int i = 0; i < columnsAndLines; i++) {
@@ -44,13 +44,13 @@ public class MainToo {
     private static void makeCelsius(float f) {
 
         float c = (f - 32) * 5 / 9;
-        System.out.println("t " + f + " градусов по фаренгейту равна " + c + " по цельсию");
+        System.out.println("t " + f + " РіСЂР°РґСѓСЃРѕРІ РїРѕ С„Р°СЂРµРЅРіРµР№С‚Сѓ СЂР°РІРЅР° " + c + " РїРѕ С†РµР»СЊСЃРёСЋ");
         if (c < -50) {
-            System.out.println("прохладненько");
+            System.out.println("РїСЂРѕС…Р»Р°РґРЅРµРЅСЊРєРѕ");
         } else if (-50 <= c && c < 20) {
-            System.out.println("норм");
+            System.out.println("РЅРѕСЂРј");
         } else {
-            System.out.println("жарковато");
+            System.out.println("Р¶Р°СЂРєРѕРІР°С‚Рѕ");
         }
     }
 
@@ -64,12 +64,12 @@ public class MainToo {
         int abMax = Math.max(a, b);
         int abMin = Math.min(a, b);
 
-        System.out.println("сумма двух целых чисел: " + abAdd);
-        System.out.println("разница двух целых чисел: " + abSub);
-        System.out.println("произведение из двух целых чисел: " + abMult);
-        System.out.println("среднее из двух целых чисел: " + abAver);
-        System.out.println("расстояние двух целых чисел: " + abDist);
-        System.out.println("максимальное целое число: " + abMax);
-        System.out.println("минимальное целое число: " + abMin);
+        System.out.println("СЃСѓРјРјР° РґРІСѓС… С†РµР»С‹С… С‡РёСЃРµР»: " + abAdd);
+        System.out.println("СЂР°Р·РЅРёС†Р° РґРІСѓС… С†РµР»С‹С… С‡РёСЃРµР»: " + abSub);
+        System.out.println("РїСЂРѕРёР·РІРµРґРµРЅРёРµ РёР· РґРІСѓС… С†РµР»С‹С… С‡РёСЃРµР»: " + abMult);
+        System.out.println("СЃСЂРµРґРЅРµРµ РёР· РґРІСѓС… С†РµР»С‹С… С‡РёСЃРµР»: " + abAver);
+        System.out.println("СЂР°СЃСЃС‚РѕСЏРЅРёРµ РґРІСѓС… С†РµР»С‹С… С‡РёСЃРµР»: " + abDist);
+        System.out.println("РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ С†РµР»РѕРµ С‡РёСЃР»Рѕ: " + abMax);
+        System.out.println("РјРёРЅРёРјР°Р»СЊРЅРѕРµ С†РµР»РѕРµ С‡РёСЃР»Рѕ: " + abMin);
     }
 }
