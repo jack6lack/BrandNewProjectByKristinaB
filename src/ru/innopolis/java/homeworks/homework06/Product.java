@@ -7,6 +7,7 @@ public class Product {
     private int price;
 
     public Product(String nameOfProduct, int price) {
+//        this.nameOfProduct = nameOfProduct.replaceAll("\\s", "").toLowerCase();
         this.nameOfProduct = nameOfProduct;
         this.price = price;
     }
@@ -47,9 +48,6 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" +
-                "nameOfProduct='" + nameOfProduct + '\'' +
-                ", price=" + price +
-                '}';
+        return nameOfProduct;
     }
 }
