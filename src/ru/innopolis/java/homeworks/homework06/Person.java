@@ -1,17 +1,19 @@
 package ru.innopolis.java.homeworks.homework06;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Person {
     private String name;
     private int cash;
-    private Product[] shopper;
+    private char gender;
+    private ArrayList<Product> shopper = new ArrayList<>();
 
-    public Person(String name, int cash, Product[] shopper) {
+    public Person(String name, int cash, char gender) {
+//        this.name = name.replaceAll("\\s", "").toLowerCase();
         this.name = name;
         this.cash = cash;
-        this.shopper = shopper;
+        this.gender = gender;
     }
 
     public String getName() {
@@ -36,32 +38,37 @@ public class Person {
         this.cash = cash;
     }
 
-    public Product[] getShopper() {
+    public char getGender() {
+        return gender;
+    }
+
+    public void setGender(char gender) {
+        this.gender = gender;
+    }
+
+    public ArrayList<Product> getShopper() {
         return shopper;
     }
 
-    public void setShopper(Product[] shopper) {
+    public void addToShopper(Product product, ArrayList<Product> shopper) {
         this.shopper = shopper;
+        shopper.add(product);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Person person)) return false;
-        return getCash() == person.getCash() && Objects.equals(getName(), person.getName()) && Objects.deepEquals(getShopper(), person.getShopper());
+        return cash == person.cash && gender == person.gender && Objects.equals(name, person.name) && Objects.equals(shopper, person.shopper);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getCash(), Arrays.hashCode(getShopper()));
+        return Objects.hash(name, cash, gender, shopper);
     }
 
     @Override
     public String toString() {
-        return "Person{" +
-                "name='" + name + '\'' +
-                ", cash=" + cash +
-                ", shopper=" + Arrays.toString(shopper) +
-                '}';
+        return (!this.shopper.isEmpty() ? this.name + " - " + this.shopper : this.name + " - Ничего не куплено");
     }
 }
