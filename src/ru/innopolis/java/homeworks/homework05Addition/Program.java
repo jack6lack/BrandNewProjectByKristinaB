@@ -1,13 +1,24 @@
 package ru.innopolis.java.homeworks.homework05Addition;
 
-public class Program {
-    private String programName;
-    private int rating;
-    private int numberOfViewers;
+import java.util.Objects;
 
-    public Program(String programName, int rating, int numberOfViewers) {
-        this.programName = programName;
-        this.rating = rating;
-        this.numberOfViewers = numberOfViewers;
+public record Program(String programName, int rating, int numberOfViewers) {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Program program)) return false;
+        return rating == program.rating && numberOfViewers == program.numberOfViewers && Objects.equals(programName, program.programName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(programName, rating, numberOfViewers);
+    }
+
+    @Override
+    public String toString() {
+        return "\"" + programName + "\"" +
+                ", рейтинг: " + rating +
+                ", число зрителей: " + numberOfViewers;
     }
 }
