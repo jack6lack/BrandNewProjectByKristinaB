@@ -5,9 +5,9 @@ import java.util.Scanner;
 
 public class TheCoolestMain {
     /*
-    Напишите метод проверки, является ли строка палиндромом (в обе стороны читается одинаково строка)
-На вход подается строка, которая состоит из маленьких латинских букв. Проверить, что в строке встречаются все символы
-английского алфавита ХОТЯ БЫ ОДИН РАЗ! asdsadqdwe -> false qwertyuiopasdfghjklzxcvbnmljhjqenb -> true
+    РќР°РїРёС€РёС‚Рµ РјРµС‚РѕРґ РїСЂРѕРІРµСЂРєРё, СЏРІР»СЏРµС‚СЃСЏ Р»Рё СЃС‚СЂРѕРєР° РїР°Р»РёРЅРґСЂРѕРјРѕРј (РІ РѕР±Рµ СЃС‚РѕСЂРѕРЅС‹ С‡РёС‚Р°РµС‚СЃСЏ РѕРґРёРЅР°РєРѕРІРѕ СЃС‚СЂРѕРєР°)
+РќР° РІС…РѕРґ РїРѕРґР°РµС‚СЃСЏ СЃС‚СЂРѕРєР°, РєРѕС‚РѕСЂР°СЏ СЃРѕСЃС‚РѕРёС‚ РёР· РјР°Р»РµРЅСЊРєРёС… Р»Р°С‚РёРЅСЃРєРёС… Р±СѓРєРІ. РџСЂРѕРІРµСЂРёС‚СЊ, С‡С‚Рѕ РІ СЃС‚СЂРѕРєРµ РІСЃС‚СЂРµС‡Р°СЋС‚СЃСЏ РІСЃРµ СЃРёРјРІРѕР»С‹
+Р°РЅРіР»РёР№СЃРєРѕРіРѕ Р°Р»С„Р°РІРёС‚Р° РҐРћРўРЇ Р‘Р« РћР”РРќ Р РђР—! asdsadqdwe -> false qwertyuiopasdfghjklzxcvbnmljhjqenb -> true
 */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -16,9 +16,9 @@ public class TheCoolestMain {
         st.replaceAll("\\s", "").toLowerCase();
         StringBuilder stringBuilder = new StringBuilder(st);
         if (st.equals(stringBuilder.reverse().toString())) {
-            System.out.println("это палиндром!");
+            System.out.println("СЌС‚Рѕ РїР°Р»РёРЅРґСЂРѕРј!");
         } else {
-            System.out.println("это не палиндром!");
+            System.out.println("СЌС‚Рѕ РЅРµ РїР°Р»РёРЅРґСЂРѕРј!");
         }
 
         //2
@@ -29,7 +29,7 @@ public class TheCoolestMain {
         HashSet<Character> set = new HashSet<>();
         for (int i = 0; i < checkButChar.length; i++) {
             if (checkButChar.length < 26) {
-                System.out.println("ну точно фолс");
+                System.out.println("РЅСѓ С‚РѕС‡РЅРѕ С„РѕР»СЃ");
                 break;
             }
             for (int j = 0; j < alphabetButChar.length; j++) {
@@ -40,9 +40,9 @@ public class TheCoolestMain {
             }
         }
         if (set.size() == 26) {
-            System.out.println("все буквы найдены");
+            System.out.println("РІСЃРµ Р±СѓРєРІС‹ РЅР°Р№РґРµРЅС‹");
         } else {
-            System.out.println("к сожалению, это не весь алфавит, можно плакать");
+            System.out.println("Рє СЃРѕР¶Р°Р»РµРЅРёСЋ, СЌС‚Рѕ РЅРµ РІРµСЃСЊ Р°Р»С„Р°РІРёС‚, РјРѕР¶РЅРѕ РїР»Р°РєР°С‚СЊ");
         }
     }
 }
