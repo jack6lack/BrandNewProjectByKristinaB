@@ -1,37 +1,58 @@
 package ru.innopolis.java.homeworks.homework06;
 
+import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Product {
     private String nameOfProduct;
-    private int price;
+    private double price;
 
     public Product(String nameOfProduct, int price) {
 //        this.nameOfProduct = nameOfProduct.replaceAll("\\s", "").toLowerCase();
         this.nameOfProduct = nameOfProduct;
+        getNameOfProduct();
         this.price = price;
     }
 
     public String getNameOfProduct() {
-        if (this.nameOfProduct == null) {
-            throw new IllegalArgumentException("Название продукта не может быть пустым");
+        if (!isMatchesNamingRule(this.nameOfProduct)) {
+            throw new IllegalArgumentException("Название продукта не может быть пустым, состоящим только из цифр или короче 3 символов");
         }
-        return nameOfProduct;
+        return this.nameOfProduct;
     }
 
     public void setNameOfProduct(String nameOfProduct) {
         this.nameOfProduct = nameOfProduct;
+        getNameOfProduct();
     }
 
-    public int getPrice() {
-        if (this.price < 0) {
-            throw new IllegalArgumentException("Цена не может быть отрицательной");
+    public double getPrice() {
+        if (!isMatchesPricingRule(this.price)) {
+            throw new IllegalArgumentException("Цена не может быть отрицательной или равной нулю");
         }
-        return price;
+        return this.price;
     }
 
     public void setPrice(int price) {
         this.price = price;
+        getPrice();
+    }
+
+    private boolean isMatchesNamingRule(String nameForCheck) {
+        if (nameForCheck.isBlank()
+                || nameForCheck.length() < 3
+                || nameForCheck.matches("[0-9]+")) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isMatchesPricingRule(double priceForCheck) {
+        if (priceForCheck <= 0) {
+            return false;
+        }
+        return true;
     }
 
     @Override

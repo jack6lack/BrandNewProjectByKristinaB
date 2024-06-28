@@ -1,49 +1,42 @@
-package ru.innopolis.java.homeworks.homework06;
+package ru.innopolis.java.homeworks.homework06.ppl;
+
+import ru.innopolis.java.homeworks.homework06.Product;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class Person {
     private String name;
-    private int cash;
+    private double cash;
     private char gender;
+    private int age;
     private ArrayList<Product> shopper = new ArrayList<>();
 
-    public Person(String name, int cash, char gender) {
+    public Person(String name, double cash, char gender, int age) {
 //        this.name = name.replaceAll("\\s", "").toLowerCase();
         this.name = name;
         this.cash = cash;
         this.gender = gender;
+        this.age = age;
     }
 
     public String getName() {
-        if (this.name == null) {
+        if (this.name.isBlank()) {
             throw new IllegalArgumentException("Имя не может быть пустым");
         }
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public double getCash() {
+        return this.cash;
     }
 
-    public int getCash() {
-        if (this.cash < 0) {
-            throw new IllegalArgumentException("Деньги не могут быть отрицательными");
-        }
-        return cash;
-    }
-
-    public void setCash(int cash) {
+    public void setCash(double cash) {
         this.cash = cash;
     }
 
     public char getGender() {
         return gender;
-    }
-
-    public void setGender(char gender) {
-        this.gender = gender;
     }
 
     public ArrayList<Product> getShopper() {
