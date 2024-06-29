@@ -40,8 +40,4 @@ public class DiscountAmountHandler {
     public double getDiscountAmount() {
         return discountAmount;
     }
-
-    public void setDiscountAmount(double discountAmount) {
-        this.discountAmount = discountAmount;
-    }
 }

@@ -1,19 +1,16 @@
 package ru.innopolis.java.homeworks.homework06.ppl;
 
-import ru.innopolis.java.homeworks.homework06.DiscountProduct;
-import ru.innopolis.java.homeworks.homework06.Product;
-
 public class Pensioners extends Person {
-    private boolean isOnSale;
 
     public Pensioners(String name, double cash, char gender, int age) {
         super(name, cash, gender, age);
+        checkAge(age);
     }
 
     @Override
     public double getCash() {
         if (super.getCash() < 0) {
-            System.out.println("недостаточно монет");
+            System.out.println("баланс не может быть отрицательным");
         }
         return super.getCash();
     }
@@ -24,11 +21,4 @@ public class Pensioners extends Person {
         }
     }
 
-    public void checkIfProductIsOnSale(Product product) {
-        isOnSale = product instanceof DiscountProduct;
-    }
-
-    public boolean isOnSale() {
-        return isOnSale;
-    }
 }

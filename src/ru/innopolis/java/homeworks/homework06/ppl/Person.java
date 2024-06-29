@@ -1,6 +1,6 @@
 package ru.innopolis.java.homeworks.homework06.ppl;
 
-import ru.innopolis.java.homeworks.homework06.Product;
+import ru.innopolis.java.homeworks.homework06.product.RegularProduct;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -10,7 +10,7 @@ public class Person {
     private double cash;
     private char gender;
     private int age;
-    private ArrayList<Product> shopper = new ArrayList<>();
+    private ArrayList<RegularProduct> shopper = new ArrayList<>();
 
     public Person(String name, double cash, char gender, int age) {
 //        this.name = name.replaceAll("\\s", "").toLowerCase();
@@ -22,9 +22,11 @@ public class Person {
 
     public String getName() {
         if (this.name.isBlank()) {
-            throw new IllegalArgumentException("Имя не может быть пустым");
+            System.out.println("имя не может быть пустым!");
+            return null;
+        } else {
+            return name;
         }
-        return name;
     }
 
     public double getCash() {
@@ -39,13 +41,13 @@ public class Person {
         return gender;
     }
 
-    public ArrayList<Product> getShopper() {
+    public ArrayList<RegularProduct> getShopper() {
         return shopper;
     }
 
-    public void addToShopper(Product product, ArrayList<Product> shopper) {
+    public void addToShopper(RegularProduct regularProduct, ArrayList<RegularProduct> shopper) {
         this.shopper = shopper;
-        shopper.add(product);
+        shopper.add(regularProduct);
     }
 
     @Override
