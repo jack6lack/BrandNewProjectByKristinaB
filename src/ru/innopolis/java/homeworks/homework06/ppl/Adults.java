@@ -3,7 +3,7 @@ package ru.innopolis.java.homeworks.homework06.ppl;
 import java.util.Objects;
 
 public class Adults extends Person {
-    private double creditCardLimit = 1000;
+    private double creditCardLimit = 150_000;
 
     public Adults(String name, double cash, char gender, int age) {
         super(name, cash, gender, age);
@@ -25,7 +25,7 @@ public class Adults extends Person {
         if (super.getCash() < 0) {
             creditCardLimit = creditCardLimit + super.getCash();
             return creditCardLimit;
-        } else if (creditCardLimit != 1000) {
+        } else if (creditCardLimit != 150_000) {
             creditCardLimit = super.getCash();
             return creditCardLimit;
         } else {

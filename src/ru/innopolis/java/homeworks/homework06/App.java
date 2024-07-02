@@ -55,16 +55,13 @@ public class App {
             }
             for (Person person : personList) {
                 if (person.getName().equals(checkNameOrEnd)) {
-
                     for (Product product : productList) {
                         if (product.getNameOfProduct().equals(checkProduct)) {
                             if (product instanceof DiscountProduct) {
                                 dah = new DiscountAmountHandler(lt, person);
                                 superAddinToShopper(person, (DiscountProduct) product, dah);
-//                                System.out.println("кэш: " + person.getCash() + " скидка : " + dah.getDiscountAmount());
                             } else {
                                 superAddinToShopper(person, (RegularProduct) product);
-//                                System.out.println("кэш: " + person.getCash() + " скидка : " + dah.getDiscountAmount());
                             }
                             break;
                         }
@@ -81,49 +78,62 @@ public class App {
         //акционные, неакционные товары и недопустимые товары
         ArrayList<Product> regularProducts = new ArrayList<>();
         ArrayList<Product> discountProducts = new ArrayList<>();
+        ArrayList<Product> deletedProducts = new ArrayList<>();
         for (Product product : productList) {
-            if (product instanceof DiscountProduct) {
+            if (!product.isMatchesNamingRule(product.getNameOfProduct()) || !product.isMatchesPricingRule(product.getPrice())) {
+                deletedProducts.add(product);
+            } else if (product instanceof DiscountProduct) {
                 discountProducts.add(product);
             } else {
                 regularProducts.add(product);
             }
         }
-        System.out.println("обычные продукты: " + regularProducts + "\nакционные продукты: " + discountProducts);
+        System.out.println("обычные продукты: " + regularProducts + "\nакционные продукты: " + discountProducts + "\nудаленные продукты: " + deletedProducts);
+    }
+
+    static boolean isProductCompliesWithTheRules(Product product) {
+        return product.getNameOfProduct() != null && product.getPrice() != 0;
     }
 
     static boolean superBuyinForMoney(Person person, RegularProduct regularProduct) {
-        ShoppingHandler sh = new ShoppingHandler();
-        if (person instanceof Children) {
-            if (((Children) person).isAbleToBuy()) {
-                return sh.buyinForMoney(person, regularProduct);
+        if (isProductCompliesWithTheRules(regularProduct)) {
+            if (person instanceof Children) {
+                if (((Children) person).isAbleToBuy()) {
+                    return ShoppingHandler.buyinForMoney(person, regularProduct);
+                } else {
+                    return false;
+                }
+            } else if (person instanceof Pensioners) {
+                if (regularProduct instanceof DiscountProduct) {
+                    return ShoppingHandler.buyinForMoney(person, regularProduct);
+                } else {
+                    return false;
+                }
             } else {
-                return false;
-            }
-        } else if (person instanceof Pensioners) {
-            if (regularProduct instanceof DiscountProduct) {
-                return sh.buyinForMoney(person, regularProduct);
-            } else {
-                return false;
+                ShoppingHandler.buyinForMoney(person, regularProduct);
+                return true;
             }
         } else {
-            sh.buyinForMoney(person, regularProduct);
-            return true;
+            return false;
         }
     }
 
     static boolean superBuyinForMoney(Person person, DiscountProduct product, DiscountAmountHandler dah) {
-        ShoppingHandler sh = new ShoppingHandler();
-        if (person instanceof Children) {
-            if (((Children) person).isAbleToBuy()) {
-                return sh.buyinForMoney(person, product, dah);
+        if (isProductCompliesWithTheRules(product)) {
+            if (person instanceof Children) {
+                if (((Children) person).isAbleToBuy()) {
+                    return ShoppingHandler.buyinForMoney(person, product, dah);
+                } else {
+                    return false;
+                }
+            } else if (person instanceof Pensioners) {
+                return ShoppingHandler.buyinForMoney(person, product, dah);
             } else {
-                return false;
+                ShoppingHandler.buyinForMoney(person, product, dah);
+                return true;
             }
-        } else if (person instanceof Pensioners) {
-            return sh.buyinForMoney(person, product, dah);
         } else {
-            sh.buyinForMoney(person, product, dah);
-            return true;
+            return false;
         }
     }
 

@@ -10,33 +10,29 @@ public class RegularProduct implements Product {
     public RegularProduct(String nameOfProduct, int price) {
 //        this.nameOfProduct = nameOfProduct.replaceAll("\\s", "").toLowerCase();
         this.nameOfProduct = nameOfProduct;
-        getNameOfProduct();
         this.price = price;
     }
 
     @Override
     public String getNameOfProduct() {
         if (!isMatchesNamingRule(this.nameOfProduct)) {
-            System.out.println("недопустимое имя продукта!");
-            return null;
-        } else {
-            return this.nameOfProduct;
+            System.out.println(this.nameOfProduct + " - недопустимое имя продукта!");
         }
+        return this.nameOfProduct;
+
     }
 
     @Override
     public double getPrice() {
         if (!isMatchesPricingRule(this.price)) {
-            System.out.println("недопустимая стоимость продукта!");
-            return 0;
-        } else {
-            return this.price;
+            System.out.println(this.nameOfProduct + " - недопустимая стоимость продукта!");
         }
+        return this.price;
     }
 
     @Override
     public boolean isMatchesNamingRule(String nameForCheck) {
-        if (nameForCheck.isBlank() || nameForCheck.length() < 3 || nameForCheck.matches("[0-9]+")) {
+        if (nameForCheck == null || nameForCheck.isBlank() || nameForCheck.length() < 3 || nameForCheck.matches("[0-9]+")) {
             return false;
         }
         return true;

@@ -7,7 +7,7 @@ import ru.innopolis.java.homeworks.homework06.ppl.Person;
 
 public class ShoppingHandler {
 
-    public boolean buyinForMoney(Person person, RegularProduct regularProduct) {
+    public static boolean buyinForMoney(Person person, RegularProduct regularProduct) {
         double thinnerCash = person.getCash() - regularProduct.getPrice();
         if (thinnerCash < 0) {
             if (person instanceof Adults) {
@@ -22,7 +22,7 @@ public class ShoppingHandler {
         }
     }
 
-    public boolean buyinForMoney(Person person, DiscountProduct discountProduct, DiscountAmountHandler dah) {
+    public static boolean buyinForMoney(Person person, DiscountProduct discountProduct, DiscountAmountHandler dah) {
         double thinnerCash = person.getCash() - (discountProduct.getPrice() - (dah.getDiscountAmount() != 0 ?
                 discountProduct.getPrice() / 100 * dah.getDiscountAmount() : 0));
         if (thinnerCash < 0) {
