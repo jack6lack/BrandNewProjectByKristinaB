@@ -1,6 +1,5 @@
 package ru.innopolis.java.homeworks.homework08.support;
 
-import ru.innopolis.java.homeworks.homework08.ppl.Adults;
 import ru.innopolis.java.homeworks.homework08.ppl.Children;
 import ru.innopolis.java.homeworks.homework08.ppl.Person;
 import ru.innopolis.java.homeworks.homework08.product.Product;

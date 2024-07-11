@@ -1,21 +1,19 @@
 package ru.innopolis.java.homeworks.homework06;
 
-import ru.innopolis.java.homeworks.homework08.ppl.Children;
-import ru.innopolis.java.homeworks.homework08.ppl.Pensioners;
-import ru.innopolis.java.homeworks.homework08.ppl.Person;
-import ru.innopolis.java.homeworks.homework08.product.DiscountProduct;
-import ru.innopolis.java.homeworks.homework08.product.Product;
-import ru.innopolis.java.homeworks.homework08.product.RegularProduct;
-import ru.innopolis.java.homeworks.homework08.support.DiscountAmountHandler;
-import ru.innopolis.java.homeworks.homework08.support.ShoppingHandler;
-import ru.innopolis.java.homeworks.homework08.support.TxtDataHandler;
+import ru.innopolis.java.homeworks.homework06.ppl.Adults;
+import ru.innopolis.java.homeworks.homework06.ppl.Children;
+import ru.innopolis.java.homeworks.homework06.ppl.Pensioners;
+import ru.innopolis.java.homeworks.homework06.ppl.Person;
+import ru.innopolis.java.homeworks.homework06.product.DiscountProduct;
+import ru.innopolis.java.homeworks.homework06.product.Product;
+import ru.innopolis.java.homeworks.homework06.product.RegularProduct;
+import ru.innopolis.java.homeworks.homework06.support.DiscountAmountHandler;
+import ru.innopolis.java.homeworks.homework06.support.ShoppingHandler;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Objects;
+import java.util.Scanner;
 
 public class App {
 
@@ -26,51 +24,54 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         LocalTime lt = LocalTime.now();
         dah = new DiscountAmountHandler(lt, null);
-        ArrayList<Person> personList = new ArrayList<>();
-        ArrayList<Product> productList = new ArrayList<>();
 
-        try (BufferedReader br = Files.newBufferedReader(Path.of("resources/data.txt"))) {
-            String condition = "";
-            while (!condition.equals("END")) {
-                int counter = 0;
-                for (String line : br.lines().toList()) {
-                    condition = line;
-                    if (counter == 0) {
-                        personList = TxtDataHandler.readPersonsMakeList(line);
-                    }
-                    if (counter == 1) {
-                        productList = TxtDataHandler.readProductsMakeList(line);
-                    }
-                    if (counter > 1) {
-                        if (line.equals("END")) {
+        ArrayList<Person> personList = new ArrayList<>();
+        personList.add(new Pensioners("Павел Андреевич", 10_000, 'm', 66));
+        personList.add(new Pensioners("Анна Петровна", 2_000, 'f', 65));
+        personList.add(new Adults("Борис", 10, 'm', 44));
+        personList.add(new Children("Женя", 0, 'f', 16));
+        personList.add(new Children("Света", -3, 'f', 16));
+
+        ArrayList<Product> productList = new ArrayList<>();
+        productList.add(new DiscountProduct("Хлеб", 40, dah));
+        productList.add(new DiscountProduct("Молоко", 60, dah));
+        productList.add(new DiscountProduct("Торт", 1000, dah));
+        productList.add(new RegularProduct("Кофе растворимый", 879));
+        productList.add(new RegularProduct("Масло", 150));
+        productList.add(new RegularProduct("Мороженое", 200));
+        productList.add(new RegularProduct("Макароны", 800));
+        productList.add(new RegularProduct("888", 100));
+        productList.add(new RegularProduct("ен", 100));
+        productList.add(new RegularProduct("Шоколадка", 0));
+
+        String checkNameOrEnd;
+        String checkProduct = "";
+
+        System.out.println("начинаем покупки: ");
+        do {
+//            checkNameOrEnd = scanner.nextLine().replaceAll("\\s", "").toLowerCase();
+            checkNameOrEnd = scanner.nextLine();
+//            checkProduct = scanner.nextLine().replaceAll("\\s", "").toLowerCase();
+            if (!checkNameOrEnd.equals("END")) {
+                checkProduct = scanner.nextLine();
+            }
+            for (Person person : personList) {
+                if (person.getName().equals(checkNameOrEnd)) {
+                    for (Product product : productList) {
+                        if (product.getNameOfProduct().equals(checkProduct)) {
+                            if (product instanceof DiscountProduct) {
+                                dah = new DiscountAmountHandler(lt, person);
+                                superAddinToShopper(person, (DiscountProduct) product, dah);
+                            } else {
+                                superAddinToShopper(person, (RegularProduct) product);
+                            }
                             break;
                         }
-                        int i = line.indexOf("-");
-                        String customerName = line.substring(0, i);
-                        String productName = line.substring(i + 1);
-                        for (Person person : personList) {
-                            if (person.getName().equals(customerName)) {
-                                for (Product product : productList) {
-                                    if (product.getNameOfProduct().equals(productName)) {
-                                        if (product instanceof DiscountProduct) {
-                                            dah = new DiscountAmountHandler(lt, person);
-                                            superAddinToShopper(person, (DiscountProduct) product, dah);
-                                        } else {
-                                            superAddinToShopper(person, (RegularProduct) product);
-                                        }
-                                        break;
-                                    }
-                                }
-                                break;
-                            }
-                        }
                     }
-                    counter++;
+                    break;
                 }
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        } while (!Objects.equals(checkNameOrEnd, "END"));
 
         //люди и покупки
         for (Person person : personList) {

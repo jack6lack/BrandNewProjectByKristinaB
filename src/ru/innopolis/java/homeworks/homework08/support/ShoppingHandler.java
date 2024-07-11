@@ -40,12 +40,13 @@ public class ShoppingHandler {
 
     public static void addinToShopper(Person person, RegularProduct regularProduct) {
         person.addToShopper(regularProduct, person.getShopper());
-        System.out.println(person.getName() + (person.getGender() == 'm' ? " купил " : " купила ") + regularProduct.getNameOfProduct());
+        TxtLogger txtLogger = new TxtLogger("report_on_task_8");
+        txtLogger.log(person.getName() + (person.getGender() == 'm' ? " купил " : " купила ") + regularProduct.getNameOfProduct());
     }
 
     public static void addinToShopper(Person person, DiscountProduct discountProduct, DiscountAmountHandler dah) {
         person.addToShopper(discountProduct, person.getShopper());
-        System.out.println(person.getName() + (person.getGender() == 'm' ? " купил " : " купила ") + discountProduct.getNameOfProduct());
-
+        TxtLogger txtLogger = new TxtLogger("report_on_task_8");
+        txtLogger.log(person.getName() + (person.getGender() == 'm' ? " купил " : " купила ") + discountProduct.getNameOfProduct());
     }
 }
