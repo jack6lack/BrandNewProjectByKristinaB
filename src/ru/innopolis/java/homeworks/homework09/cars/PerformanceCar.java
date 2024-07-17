@@ -13,7 +13,16 @@ public class PerformanceCar extends Car {
     }
 
     public PerformanceCar() {
+    }
 
+    @Override
+    public void setSuspension(int suspension) {
+        super.setSuspension(suspension - 25);
+    }
+
+    @Override
+    public void setHorsepower(int horsepower) {
+        super.setHorsepower((int) (horsepower * 1.5));
     }
 
     public String[] getAddOns() {

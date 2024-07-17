@@ -2,16 +2,16 @@ package ru.innopolis.java.homeworks.homework09.races;
 
 import ru.innopolis.java.homeworks.homework09.cars.Car;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Race implements IRace {
     private int routeLength;
     private String routeName;
     private int prizeFund;
-    private ArrayList<Car> participants;
+    private List<Car> participants;
 
-    protected Race(int routeLength, String routeName, int prizeFund, ArrayList<Car> participants) {
+    protected Race(int routeLength, String routeName, int prizeFund, List<Car> participants) {
         this.routeLength = routeLength;
         this.routeName = routeName;
         this.prizeFund = prizeFund;
@@ -46,11 +46,11 @@ public class Race implements IRace {
         this.prizeFund = prizeFund;
     }
 
-    public ArrayList<Car> getParticipants() {
+    public List<Car> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(ArrayList<Car> participants) {
+    public void setParticipants(List<Car> participants) {
         this.participants = participants;
     }
 
