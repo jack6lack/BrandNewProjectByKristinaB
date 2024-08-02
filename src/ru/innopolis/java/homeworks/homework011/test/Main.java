@@ -1,20 +1,29 @@
 package ru.innopolis.java.homeworks.homework011.test;
 
+import ru.innopolis.java.homeworks.homework011.model.Car;
 import ru.innopolis.java.homeworks.homework011.repository.CarsRepository;
 import ru.innopolis.java.homeworks.homework011.repository.CarsRepositoryImpl;
 import ru.innopolis.java.homeworks.homework08.support.TxtLogger;
 
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
 
         CarsRepository carsRepository = new CarsRepositoryImpl();
-        carsRepository.createCars("src/ru/innopolis/java/homeworks/homework011/data/input.txt");
+        Map<String, Car> carMap = carsRepository.createCars("src/ru/innopolis/java/homeworks/homework011/data/input.txt");
 
         TxtLogger txtLogger = new TxtLogger("src/ru/innopolis/java/homeworks/homework011/data/output");
 
         Scanner scanner = new Scanner(System.in);
+
+        txtLogger.log("Автомобили в базе:\n" +
+                "\n" +
+                "Number Model Color Mileage Cost");
+        for (Car car : carMap.values()) {
+            txtLogger.log(car.toString());
+        }
 
         //1
         System.out.println("введите цвет: ");
