@@ -1,48 +1,21 @@
 package ru.innopolis.java.homeworks.homework06;
 
-import ru.innopolis.java.homeworks.homework06.ppl.Adults;
-import ru.innopolis.java.homeworks.homework06.ppl.Children;
-import ru.innopolis.java.homeworks.homework06.ppl.Pensioners;
-import ru.innopolis.java.homeworks.homework06.ppl.Person;
-import ru.innopolis.java.homeworks.homework06.product.DiscountProduct;
-import ru.innopolis.java.homeworks.homework06.product.Product;
-import ru.innopolis.java.homeworks.homework06.product.RegularProduct;
-import ru.innopolis.java.homeworks.homework06.support.DiscountAmountHandler;
-import ru.innopolis.java.homeworks.homework06.support.ShoppingHandler;
-
-import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class App {
 
-    private static DiscountAmountHandler dah;
-
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        LocalTime lt = LocalTime.now();
-        dah = new DiscountAmountHandler(lt, null);
 
-        ArrayList<Person> personList = new ArrayList<>();
-        personList.add(new Pensioners("Павел Андреевич", 10_000, 'm', 66));
-        personList.add(new Pensioners("Анна Петровна", 2_000, 'f', 65));
-        personList.add(new Adults("Борис", 10, 'm', 44));
-        personList.add(new Children("Женя", 0, 'f', 16));
-        personList.add(new Children("Света", -3, 'f', 16));
+        String persons = scanner.nextLine();
+        List<Person> personList = readPersonsMakeList(persons);
 
-        ArrayList<Product> productList = new ArrayList<>();
-        productList.add(new DiscountProduct("Хлеб", 40, dah));
-        productList.add(new DiscountProduct("Молоко", 60, dah));
-        productList.add(new DiscountProduct("Торт", 1000, dah));
-        productList.add(new RegularProduct("Кофе растворимый", 879));
-        productList.add(new RegularProduct("Масло", 150));
-        productList.add(new RegularProduct("Мороженое", 200));
-        productList.add(new RegularProduct("Макароны", 800));
-        productList.add(new RegularProduct("888", 100));
-        productList.add(new RegularProduct("ен", 100));
-        productList.add(new RegularProduct("Шоколадка", 0));
+        String products = scanner.nextLine();
+        List<Product> productList = readProductsMakeList(products);
 
         String checkNameOrEnd;
         String checkProduct = "";
@@ -59,12 +32,7 @@ public class App {
                 if (person.getName().equals(checkNameOrEnd)) {
                     for (Product product : productList) {
                         if (product.getNameOfProduct().equals(checkProduct)) {
-                            if (product instanceof DiscountProduct) {
-                                dah = new DiscountAmountHandler(lt, person);
-                                superAddinToShopper(person, (DiscountProduct) product, dah);
-                            } else {
-                                superAddinToShopper(person, (RegularProduct) product);
-                            }
+                            addinToShopper(person, product);
                             break;
                         }
                     }
@@ -72,84 +40,64 @@ public class App {
                 }
             }
         } while (!Objects.equals(checkNameOrEnd, "END"));
-
-        //люди и покупки
         for (Person person : personList) {
             System.out.println(person);
         }
-        //акционные, неакционные товары и недопустимые товары
-        ArrayList<Product> regularProducts = new ArrayList<>();
-        ArrayList<Product> discountProducts = new ArrayList<>();
-        ArrayList<Product> deletedProducts = new ArrayList<>();
-        for (Product product : productList) {
-            if (!product.isMatchesNamingRule(product.getNameOfProduct()) || !product.isMatchesPricingRule(product.getPrice())) {
-                deletedProducts.add(product);
-            } else if (product instanceof DiscountProduct) {
-                discountProducts.add(product);
+    }
+
+    private static List<Person> readPersonsMakeList(String line) {
+        List<Person> personArrayList = new ArrayList<>();
+        StringBuilder sb = new StringBuilder(line);
+        int i, j, k;
+        while (!sb.isEmpty()) {
+            i = sb.indexOf(";");
+            j = sb.indexOf("=");
+            k = sb.indexOf(",");
+            char gender;
+            String personData = sb.substring(0, i).trim();
+            String personName = personData.substring(0, j).trim();
+            int personCash = Integer.parseInt(personData.substring(j + 1, k).trim());
+            if (personData.contains("m")) {
+                gender = 'm';
             } else {
-                regularProducts.add(product);
+                gender = 'f';
             }
+            personArrayList.add(new Person(personName, personCash, gender));
+            sb.delete(0, i + 2);
         }
-        System.out.println("обычные продукты: " + regularProducts + "\nакционные продукты: " + discountProducts + "\nудаленные продукты: " + deletedProducts);
+        return personArrayList;
     }
 
-    static boolean isProductCompliesWithTheRules(Product product) {
-        return product.getNameOfProduct() != null && product.getPrice() != 0;
+    private static List<Product> readProductsMakeList(String line) {
+        List<Product> productArrayList = new ArrayList<>();
+        StringBuilder sb = new StringBuilder(line);
+        int i, j;
+        while (!sb.isEmpty()) {
+            i = sb.indexOf(";");
+            j = sb.indexOf("=");
+            String productData = sb.substring(0, i).trim();
+            String productName = productData.substring(0, j).trim();
+            int productPrice = Integer.parseInt(productData.substring(j + 1).trim());
+            productArrayList.add(new Product(productName, productPrice));
+            sb.delete(0, i + 2);
+        }
+        return productArrayList;
     }
 
-    static boolean superBuyinForMoney(Person person, RegularProduct regularProduct) {
-        if (isProductCompliesWithTheRules(regularProduct)) {
-            if (person instanceof Children) {
-                if (((Children) person).isAbleToBuy()) {
-                    return ShoppingHandler.buyinForMoney(person, regularProduct);
-                } else {
-                    return false;
-                }
-            } else if (person instanceof Pensioners) {
-                if (regularProduct instanceof DiscountProduct) {
-                    return ShoppingHandler.buyinForMoney(person, regularProduct);
-                } else {
-                    return false;
-                }
-            } else {
-                ShoppingHandler.buyinForMoney(person, regularProduct);
-                return true;
-            }
-        } else {
+    static boolean buyinForMoney(Person person, Product product) {
+        int thinnerCash = person.getCash() - product.getPrice();
+        if (thinnerCash < 0) {
             return false;
-        }
-    }
-
-    static boolean superBuyinForMoney(Person person, DiscountProduct product, DiscountAmountHandler dah) {
-        if (isProductCompliesWithTheRules(product)) {
-            if (person instanceof Children) {
-                if (((Children) person).isAbleToBuy()) {
-                    return ShoppingHandler.buyinForMoney(person, product, dah);
-                } else {
-                    return false;
-                }
-            } else if (person instanceof Pensioners) {
-                return ShoppingHandler.buyinForMoney(person, product, dah);
-            } else {
-                ShoppingHandler.buyinForMoney(person, product, dah);
-                return true;
-            }
         } else {
-            return false;
+            person.setCash(thinnerCash);
+            return true;
         }
     }
 
-    public static void superAddinToShopper(Person person, RegularProduct regularProduct) {
-        if (superBuyinForMoney(person, regularProduct)) {
-            ShoppingHandler.addinToShopper(person, regularProduct);
-        } else {
-            System.out.println(person.getName() + " не может позволить себе " + regularProduct.getNameOfProduct());
-        }
-    }
-
-    public static void superAddinToShopper(Person person, DiscountProduct product, DiscountAmountHandler dah) {
-        if (superBuyinForMoney(person, product, dah)) {
-            ShoppingHandler.addinToShopper(person, product, dah);
+    static void addinToShopper(Person person, Product product) {
+        if (buyinForMoney(person, product)) {
+            person.addToShopper(product, person.getShopper());
+            System.out.println(person.getName() + (person.getGender() == 'm' ? " купил " : " купила ") + product.getNameOfProduct());
         } else {
             System.out.println(person.getName() + " не может позволить себе " + product.getNameOfProduct());
         }
