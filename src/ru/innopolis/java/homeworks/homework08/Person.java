@@ -1,39 +1,37 @@
-package ru.innopolis.java.homeworks.homework08.ppl;
-
-import ru.innopolis.java.homeworks.homework08.product.RegularProduct;
+package ru.innopolis.java.homeworks.homework08;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Person {
     private String name;
-    private double cash;
-    private char gender;
-    private int age;
-    private ArrayList<RegularProduct> shopper = new ArrayList<>();
+    private Integer cash;
+    private Character gender;
+    private List<Product> shopper = new ArrayList<>();
 
-    public Person(String name, double cash, char gender, int age) {
+    public Person(String name, Integer cash, Character gender) {
 //        this.name = name.replaceAll("\\s", "").toLowerCase();
         this.name = name;
         this.cash = cash;
         this.gender = gender;
-        this.age = age;
     }
 
     public String getName() {
-        if (this.name.isBlank()) {
-            System.out.println("имя не может быть пустым!");
-            return null;
-        } else {
-            return name;
+        if (this.name == null) {
+            throw new IllegalArgumentException("Имя не может быть пустым");
         }
+        return name;
     }
 
-    public double getCash() {
-        return this.cash;
+    public int getCash() {
+        if (this.cash < 0) {
+            throw new IllegalArgumentException("Деньги не могут быть отрицательными");
+        }
+        return cash;
     }
 
-    public void setCash(double cash) {
+    public void setCash(int cash) {
         this.cash = cash;
     }
 
@@ -41,13 +39,13 @@ public class Person {
         return gender;
     }
 
-    public ArrayList<RegularProduct> getShopper() {
+    public List<Product> getShopper() {
         return shopper;
     }
 
-    public void addToShopper(RegularProduct regularProduct, ArrayList<RegularProduct> shopper) {
+    public void addToShopper(Product product, List<Product> shopper) {
         this.shopper = shopper;
-        shopper.add(regularProduct);
+        shopper.add(product);
     }
 
     @Override
