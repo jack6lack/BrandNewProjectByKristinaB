@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
+
+        //main
         Scanner scanner = new Scanner(System.in);
         Person person;
         String checkLine;
@@ -31,6 +33,16 @@ public class App {
                 System.out.println(e.getMessage());
             }
         }
+
+        //add
+        boolean canCreateUser = User.isMatchingRules("super_boris", "123qwe", "123qwe");
+        System.out.println("can a user be created: " + canCreateUser);
+        boolean canCreateUser2 = User.isMatchingRules("super$boris", "123qwe", "123qwe");
+        System.out.println("can a user be created: " + canCreateUser2);
+        boolean canCreateUser3 = User.isMatchingRules("super_boris", "123qwe", "123we");
+        System.out.println("can a user be created: " + canCreateUser3);
+        boolean canCreateUser4 = User.isMatchingRules("super_boris", "123$qwe", "123$qwe");
+        System.out.println("can a user be created: " + canCreateUser4);
     }
 
     private static Person readLineMakePerson(String[] data) {
