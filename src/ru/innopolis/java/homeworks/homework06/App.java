@@ -1,6 +1,7 @@
 package ru.innopolis.java.homeworks.homework06;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -10,21 +11,11 @@ public class App {
 
         Scanner scanner = new Scanner(System.in);
 
-        ArrayList<Person> personList = new ArrayList<>();
-        personList.add(new Person("Павел Андреевич", 10_000, 'm'));
-        personList.add(new Person("Анна Петровна", 2_000, 'f'));
-        personList.add(new Person("Борис", 10, 'm'));
-        personList.add(new Person("Женя", 0, 'f'));
-        personList.add(new Person("Света", -3, 'f'));
+        String persons = scanner.nextLine();
+        List<Person> personList = readPersonsMakeList(persons);
 
-        ArrayList<Product> productList = new ArrayList<>();
-        productList.add(new Product("Хлеб", 40));
-        productList.add(new Product("Молоко", 60));
-        productList.add(new Product("Торт", 1000));
-        productList.add(new Product("Кофе растворимый", 879));
-        productList.add(new Product("Масло", 150));
-        productList.add(new Product("Мороженое", 200));
-        productList.add(new Product("Макароны", 800));
+        String products = scanner.nextLine();
+        List<Product> productList = readProductsMakeList(products);
 
         String checkNameOrEnd;
         String checkProduct = "";
@@ -52,6 +43,45 @@ public class App {
         for (Person person : personList) {
             System.out.println(person);
         }
+    }
+
+    private static List<Person> readPersonsMakeList(String line) {
+        List<Person> personArrayList = new ArrayList<>();
+        StringBuilder sb = new StringBuilder(line);
+        int i, j, k;
+        while (!sb.isEmpty()) {
+            i = sb.indexOf(";");
+            j = sb.indexOf("=");
+            k = sb.indexOf(",");
+            char gender;
+            String personData = sb.substring(0, i).trim();
+            String personName = personData.substring(0, j).trim();
+            int personCash = Integer.parseInt(personData.substring(j + 1, k).trim());
+            if (personData.contains("m")) {
+                gender = 'm';
+            } else {
+                gender = 'f';
+            }
+            personArrayList.add(new Person(personName, personCash, gender));
+            sb.delete(0, i + 2);
+        }
+        return personArrayList;
+    }
+
+    private static List<Product> readProductsMakeList(String line) {
+        List<Product> productArrayList = new ArrayList<>();
+        StringBuilder sb = new StringBuilder(line);
+        int i, j;
+        while (!sb.isEmpty()) {
+            i = sb.indexOf(";");
+            j = sb.indexOf("=");
+            String productData = sb.substring(0, i).trim();
+            String productName = productData.substring(0, j).trim();
+            int productPrice = Integer.parseInt(productData.substring(j + 1).trim());
+            productArrayList.add(new Product(productName, productPrice));
+            sb.delete(0, i + 2);
+        }
+        return productArrayList;
     }
 
     static boolean buyinForMoney(Person person, Product product) {

@@ -14,7 +14,7 @@ public class App {
         Television[] televisions = new Television[10];
 
         for (int i = 0; i < televisions.length; i++) {
-            televisions[i] = new Television("theCoolestTV" + i, random.nextInt(100_000),
+            televisions[i] = new Television("theCoolestTV" + i, random.nextDouble(100_000),
                     random.nextInt(100), random.nextBoolean(), random.nextInt(0, 101), random.nextBoolean(), random.nextInt(0, 100));
         }
         //2 - в цикле выводятся только те тв, чей уровень громкости меньше или равен допустимому (что вводится с клавиатуры) И те, что включены

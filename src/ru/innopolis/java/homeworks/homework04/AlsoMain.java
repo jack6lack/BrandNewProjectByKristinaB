@@ -25,33 +25,31 @@ public class AlsoMain {
         //>>-->----<<<<--->>-->---->>----->--->>-->>>->>--><--<<----<--<<<--<<--<--<<
         System.out.println("введите до 160 символов >, < и - в произвольном порядке, чтобы узнать, сколько стрел угрожает вам");
         String st = scanner.next();
-        int arrows = 0;
-        char[] symbols = st.toCharArray();
-        char[] arrow1 = {'<', '-', '-', '<', '<'};
-        char[] arrow2 = {'>', '>', '-', '-', '>'};
-
-        for (int j = 0; j < symbols.length - 4; j++) {
-            if (arrow1[0] == symbols[j]
-                    && arrow1[1] == symbols[j + 1]
-                    && arrow1[2] == symbols[j + 2]
-                    && arrow1[3] == symbols[j + 3]
-                    && arrow1[4] == symbols[j + 4]) {
-                System.out.println("стрела!");
-                arrows++;
-            }
-            if (arrow2[0] == symbols[j]
-                    && arrow2[1] == symbols[j + 1]
-                    && arrow2[2] == symbols[j + 2]
-                    && arrow2[3] == symbols[j + 3]
-                    && arrow2[4] == symbols[j + 4]) {
-                System.out.println("стрела!");
-                arrows++;
-            }
-        }
+        String s = st.replaceAll("<--<<", "").replaceAll(">>-->", "");
+        System.out.println(s);
+        int arrows = (st.length() - s.length()) / 5;
         System.out.println("итоговое количество стрел: " + arrows);
 
+//        for (int j = 0; j < symbols.length - 4; j++) {
+//            if (arrow1[0] == symbols[j]
+//                    && arrow1[1] == symbols[j + 1]
+//                    && arrow1[2] == symbols[j + 2]
+//                    && arrow1[3] == symbols[j + 3]
+//                    && arrow1[4] == symbols[j + 4]) {
+//                System.out.println("стрела!");
+//                arrows++;
+//            }
+//            if (arrow2[0] == symbols[j]
+//                    && arrow2[1] == symbols[j + 1]
+//                    && arrow2[2] == symbols[j + 2]
+//                    && arrow2[3] == symbols[j + 3]
+//                    && arrow2[4] == symbols[j + 4]) {
+//                System.out.println("стрела!");
+//                arrows++;
+//            }
+//        }
+
         //3
-        System.out.println("введите два слова на латинице: ");
         String theWord = scanner.next() + scanner.next();
         char[] dehortw = theWord.toLowerCase().replaceAll("\\s+", "").toCharArray();
         Arrays.sort(dehortw);

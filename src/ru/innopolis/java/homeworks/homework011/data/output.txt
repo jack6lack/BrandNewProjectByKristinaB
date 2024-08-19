@@ -1,0 +1,17 @@
+Автомобили в базе:
+
+Number Model Color Mileage Cost
+Car{carNumber='b873of', carModel='Volga', carColor='Black', carMileage=0, carPrice=673000}
+Car{carNumber='o983op', carModel='Toyota', carColor='Black', carMileage=698000, carPrice=740000}
+Car{carNumber='y876wd', carModel='Toyota', carColor='Black', carMileage=160000, carPrice=1000000}
+Car{carNumber='p987hj', carModel='Volga', carColor='Red', carMileage=610, carPrice=704340}
+Car{carNumber='c987ss', carModel='Toyota', carColor='White', carMileage=254000, carPrice=761000}
+Car{carNumber='a123me', carModel='Mercedes', carColor='White', carMileage=0, carPrice=8300000}
+Car{carNumber='w487mn', carModel='Lexus', carColor='Grey', carMileage=76000, carPrice=900000}
+Car{carNumber='u893ii', carModel='Toyota', carColor='Purple', carMileage=210900, carPrice=440000}
+Car{carNumber='p146op', carModel='BMW', carColor='White', carMileage=271000, carPrice=850000}
+Car{carNumber='l097df', carModel='Toyota', carColor='Black', carMileage=108000, carPrice=780000}
+номера автомобилей по цвету или пробегу: [b873of, c987ss, a123me, p146op]
+уникальные автомобили: 4
+цвет автомобиля с минимальной стоимостью: Purple
+средняя стоимость модели Toyota: 744200.0
