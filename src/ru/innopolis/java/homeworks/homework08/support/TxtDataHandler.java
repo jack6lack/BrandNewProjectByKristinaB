@@ -37,7 +37,7 @@ public class TxtDataHandler {
             Integer j = sb.indexOf("=");
             String productData = sb.substring(0, i).trim();
             String productName = productData.substring(0, j).trim();
-            Integer productPrice = Integer.parseInt(productData.substring(j + 1).trim());
+            Integer productPrice = InputParser.validateCount.map(productData.substring(j + 1).trim());
             Product product = new Product(productName, productPrice);
             productArrayList.add(product);
             sb.delete(0, i + 1);

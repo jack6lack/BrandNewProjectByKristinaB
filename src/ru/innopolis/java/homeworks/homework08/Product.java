@@ -20,9 +20,6 @@ public class Product {
     }
 
     public int getPrice() {
-        if (this.price < 0) {
-            throw new IllegalArgumentException("Цена не может быть отрицательной");
-        }
         return price;
     }
 

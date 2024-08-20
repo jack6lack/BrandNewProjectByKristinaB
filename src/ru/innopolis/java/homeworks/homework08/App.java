@@ -1,5 +1,7 @@
 package ru.innopolis.java.homeworks.homework08;
 
+import ru.innopolis.java.homeworks.homework013.ByCondition;
+import ru.innopolis.java.homeworks.homework013.CheckCondition;
 import ru.innopolis.java.homeworks.homework08.support.TxtDataHandler;
 import ru.innopolis.java.homeworks.homework08.support.TxtLogger;
 
@@ -63,13 +65,24 @@ public class App {
     }
 
     static boolean buyinForMoney(Person person, Product product) {
-        int thinnerCash = person.getCash() - product.getPrice();
-        if (thinnerCash < 0) {
-            return false;
-        } else {
-            person.setCash(thinnerCash);
+        //013
+        try {
+            ByCondition<Integer> positiveNumber = (x) -> x >= 0;
+            person.setCash(CheckCondition.calculateThinnerIntegerCash(person, product, positiveNumber));
             return true;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         }
+        return false;
+
+        //08
+//        int thinnerCash = person.getCash() - product.getPrice();
+//        if (thinnerCash < 0) {
+//            return false;
+//        } else {
+//            person.setCash(thinnerCash);
+//            return true;
+//        }
     }
 
     static void addinToShopper(Person person, Product product) {
