@@ -1,6 +1,7 @@
 package ru.innopolis.java.homeworks.homework08.support;
 
 
+import ru.innopolis.java.homeworks.homework013.utils.InputParser;
 import ru.innopolis.java.homeworks.homework08.Person;
 import ru.innopolis.java.homeworks.homework08.Product;
 
@@ -20,7 +21,7 @@ public class TxtDataHandler {
             Integer j = sb.indexOf("=");
             String personData = sb.substring(0, i).trim();
             String personName = personData.substring(0, j).trim();
-            Integer personCash = Integer.parseInt(personData.substring(j + 1).trim());
+            Integer personCash = InputParser.validateCount.map(personData.substring(j + 1).trim());
             Person person = new Person(personName, personCash, 'm');
             personArrayList.add(person);
             sb.delete(0, i + 1);
