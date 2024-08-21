@@ -4,15 +4,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 
-public class TxtLogger {
+public class TxtDataWriter {
     private final String defaultFileName = "output_data";
-    private String fileName;
+    private final String fileName;
 
-    public TxtLogger() {
+    public TxtDataWriter() {
         this.fileName = defaultFileName + ".txt";
     }
 
-    public TxtLogger(final String fileName) {
+    public TxtDataWriter(final String fileName) {
         this.fileName = fileName;
     }
 

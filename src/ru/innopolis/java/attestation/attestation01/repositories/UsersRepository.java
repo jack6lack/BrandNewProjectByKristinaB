@@ -20,6 +20,4 @@ public interface UsersRepository {
     void deleteById(String id) throws IOException, InvalidIDException;
 
     void deleteAll();
-
-    void printBeautifulLines(List<User> list, String fileName);
 }

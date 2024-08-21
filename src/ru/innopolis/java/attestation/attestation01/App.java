@@ -3,32 +3,33 @@ package ru.innopolis.java.attestation.attestation01;
 import ru.innopolis.java.attestation.attestation01.exceptions.InvalidIDException;
 import ru.innopolis.java.attestation.attestation01.exceptions.InvalidNameFormatException;
 import ru.innopolis.java.attestation.attestation01.exceptions.LoginAlreadyTakenException;
-import ru.innopolis.java.attestation.attestation01.model.HandcraftedUser;
 import ru.innopolis.java.attestation.attestation01.model.User;
 import ru.innopolis.java.attestation.attestation01.repositories.UsersRepository;
-import ru.innopolis.java.attestation.attestation01.repositories.UsersRepositoryImpl;
+import ru.innopolis.java.attestation.attestation01.repositories.UsersRepositoryFileImpl;
 import ru.innopolis.java.attestation.attestation01.support.DataExtractionUtils;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static ru.innopolis.java.attestation.attestation01.support.DataWriterUtils.printBeautifulLines;
+
 public class App {
     public static void main(String[] args) {
 
-        UsersRepository usersRepository = UsersRepositoryImpl.getInstance();
+        UsersRepository usersRepository = UsersRepositoryFileImpl.getInstance();
 
         //get user list
-        List<User> userList = usersRepository.findAll();
+        List<User> userCache = usersRepository.findAll();
         //create user
         try {
-            User newUser = new HandcraftedUser("jack", "qwe123", "qwe123", "Лапкин", "Кристина", "Максимовна", 26, true);
+            User newUser = new User("jack", "qwe123", "qwe123", "Лапкин", "Кристина", "Максимовна", 26, true);
             usersRepository.create(newUser);
         } catch (InvalidNameFormatException | LoginAlreadyTakenException e) {
             System.out.println(e.getMessage());
         }
         System.out.println("все пользователи на момент добавления нового: ");
-        userList.forEach(System.out::println);
+        userCache.forEach(System.out::println);
 
         //findById
         try {
@@ -48,7 +49,7 @@ public class App {
             throw new RuntimeException(e);
         }
         System.out.println("все пользователи после обновления одного пользователя: ");
-        userList.forEach(System.out::println);
+        userCache.forEach(System.out::println);
 
         //delete user by id
         try {
@@ -59,14 +60,14 @@ public class App {
             throw new RuntimeException(e);
         }
         System.out.println("все пользователи после удаления одного: ");
-        userList.forEach(System.out::println);
+        userCache.forEach(System.out::println);
 
         //delete all
 //        usersRepository.deleteAll();
 
         //some other databases
-        usersRepository.printBeautifulLines(DataExtractionUtils.findByAge(userList, 125), "src/ru/innopolis/java/attestation/attestation01/findByAge_database.txt");
-        usersRepository.printBeautifulLines(DataExtractionUtils.findByIsWorker(userList), "src/ru/innopolis/java/attestation/attestation01/findByIsWorker_database.txt");
-        usersRepository.printBeautifulLines(DataExtractionUtils.findByFirstLetterOfSecondName(userList, "С"), "src/ru/innopolis/java/attestation/attestation01/findByFirstLetterOfSecondName_database.txt");
+        printBeautifulLines(DataExtractionUtils.findByAge(userCache, 125), "src/ru/innopolis/java/attestation/attestation01/findByAge_database.txt");
+        printBeautifulLines(DataExtractionUtils.findByIsWorker(userCache), "src/ru/innopolis/java/attestation/attestation01/findByIsWorker_database.txt");
+        printBeautifulLines(DataExtractionUtils.findByFirstLetterOfSecondName(userCache, "С"), "src/ru/innopolis/java/attestation/attestation01/findByFirstLetterOfSecondName_database.txt");
     }
 }

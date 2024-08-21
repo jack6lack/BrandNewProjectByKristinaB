@@ -4,30 +4,32 @@ import ru.innopolis.java.attestation.attestation01.exceptions.InvalidIDException
 import ru.innopolis.java.attestation.attestation01.exceptions.InvalidNameFormatException;
 import ru.innopolis.java.attestation.attestation01.exceptions.LoginAlreadyTakenException;
 import ru.innopolis.java.attestation.attestation01.model.User;
-import ru.innopolis.java.attestation.attestation01.support.TxtLogger;
+import ru.innopolis.java.attestation.attestation01.support.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsersRepositoryImpl implements UsersRepository {
+import static ru.innopolis.java.attestation.attestation01.support.DataWriterUtils.readLineMakeUser;
+import static ru.innopolis.java.attestation.attestation01.support.DataWriterUtils.readUserMakeLine;
 
-    private static final UsersRepositoryImpl INSTANCE = new UsersRepositoryImpl();
+public class UsersRepositoryFileImpl implements UsersRepository {
+
+    private static final UsersRepositoryFileImpl INSTANCE = new UsersRepositoryFileImpl();
 
     private static final String FILE_NAME = "src/ru/innopolis/java/attestation/attestation01/database.txt";
-    private List<User> userList = new ArrayList<>();
-    private final TxtLogger txtLogger = new TxtLogger(FILE_NAME);
-    private List<String> logins = new ArrayList<>();
+    private List<User> userCache = new ArrayList<>();
+    private final TxtDataWriter txtDataWriter = new TxtDataWriter(FILE_NAME);
+    private final List<String> logins = new ArrayList<>();
 
-    private UsersRepositoryImpl() {
+    private UsersRepositoryFileImpl() {
     }
 
-    public static UsersRepositoryImpl getInstance() {
+    public static UsersRepositoryFileImpl getInstance() {
         return INSTANCE;
     }
 
@@ -35,8 +37,8 @@ public class UsersRepositoryImpl implements UsersRepository {
     public void create(User user) throws InvalidNameFormatException, LoginAlreadyTakenException {
         if (checkUser(user) && checkUniqueLogin(user.getLogin())) {
             String newUser = readUserMakeLine.map(user);
-            userList.add(user);
-            txtLogger.log(newUser);
+            userCache.add(user);
+            txtDataWriter.log(newUser);
         }
     }
 
@@ -60,116 +62,49 @@ public class UsersRepositoryImpl implements UsersRepository {
         try (BufferedReader br = Files.newBufferedReader(Path.of(FILE_NAME))) {
             for (String line : br.lines().toList()) {
                 User user = readLineMakeUser.map(line);
-                userList.add(user);
+                userCache.add(user);
             }
         } catch (IOException e) {
             throw new IllegalArgumentException(e);
         }
-        return userList;
+        return userCache;
     }
 
     @Override
     public void update(User user) throws IOException {
-        if (userList.isEmpty()) {
-            userList = findAll();
+        if (userCache.isEmpty()) {
+            userCache = findAll();
         }
         try {
             User oldUser = findById(user.getId());
             user.setId(oldUser.getId());
             user.setLt(oldUser.getLt());
-            userList.remove(oldUser);
+            userCache.remove(oldUser);
         } catch (InvalidIDException e) {
             System.out.println("Существующий пользователь не был найден, создан новый пользователь");
         }
-        userList.add(user);
+        userCache.add(user);
         clearFile(FILE_NAME);
-        userList
-                .forEach(userToWrite -> txtLogger.log(readUserMakeLine.map(userToWrite)));
+        userCache
+                .forEach(userToWrite -> txtDataWriter.log(readUserMakeLine.map(userToWrite)));
     }
 
     @Override
     public void deleteById(String id) throws IOException, InvalidIDException {
-        if (userList.isEmpty()) {
-            userList = findAll();
+        if (userCache.isEmpty()) {
+            userCache = findAll();
         }
-        userList.remove(findById(id));
+        userCache.remove(findById(id));
         clearFile(FILE_NAME);
-        userList
-                .forEach(userToWrite -> txtLogger.log(readUserMakeLine.map(userToWrite)));
+        userCache
+                .forEach(userToWrite -> txtDataWriter.log(readUserMakeLine.map(userToWrite)));
     }
 
     @Override
     public void deleteAll() {
-        userList.clear();
+        userCache.clear();
         clearFile(FILE_NAME);
     }
-
-    private Mapper<String, User> readLineMakeUser = line -> {
-        User user = new User();
-        String[] userData = line.split("\\|");
-        user.setId(userData[0]);
-        user.setLt(LocalDateTime.parse(userData[1]));
-        user.setLogin(userData[2]);
-        user.setPassword(userData[3]);
-        user.setConfirmPassword(userData[4]);
-        user.setSecondName(userData[5]);
-        user.setFirstName(userData[6]);
-        if (userData[7].equals("NULL")) {
-            user.setPatronymic(null);
-        } else {
-            user.setPatronymic(userData[7]);
-        }
-        if (userData[8].equals("NULL")) {
-            user.setAge(null);
-        } else {
-            user.setAge(Integer.parseInt(userData[8]));
-        }
-        user.setWorker(Boolean.parseBoolean(userData[9]));
-
-        return user;
-    };
-
-    public void printBeautifulLines(List<User> list, String fileName) {
-        TxtLogger logger = new TxtLogger(fileName);
-        for (User user : list) {
-            logger.log(readUserMakeLine.map(user));
-        }
-    }
-
-    private Mapper<User, String> readUserMakeLine = user -> {
-        StringBuilder sb = new StringBuilder();
-        sb.append(user.getId())
-                .append("|")
-                .append(user.getLt())
-                .append("|")
-                .append(user.getLogin())
-                .append("|")
-                .append(user.getPassword())
-                .append("|")
-                .append(user.getConfirmPassword())
-                .append("|")
-                .append(user.getSecondName())
-                .append("|")
-                .append(user.getFirstName())
-                .append("|");
-        if (user.getPatronymic() == null) {
-            sb.append("NULL")
-                    .append("|");
-        } else {
-            sb.append(user.getPatronymic())
-                    .append("|");
-        }
-        if (user.getAge() == null) {
-            sb.append("NULL")
-                    .append("|");
-        } else {
-            sb.append(user.getAge())
-                    .append("|");
-        }
-        sb.append(user.isWorker());
-
-        return sb.toString();
-    };
 
     private void clearFile(String file) {
         try (PrintWriter writer = new PrintWriter(file)) {
@@ -205,7 +140,7 @@ public class UsersRepositoryImpl implements UsersRepository {
 
     private boolean checkUniqueLogin(String login) throws LoginAlreadyTakenException {
         if (logins.isEmpty()) {
-            userList.forEach(user -> logins.add(user.getLogin()));
+            userCache.forEach(user -> logins.add(user.getLogin()));
         }
         if (logins.contains(login)) {
             throw new LoginAlreadyTakenException("Пользователь с таким логином уже существует!");

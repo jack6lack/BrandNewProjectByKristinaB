@@ -30,6 +30,19 @@ public class User {
         this.isWorker = isWorker;
     }
 
+    public User(String login, String password, String confirmPassword, String secondName, String firstName, String patronymic, Integer age, boolean isWorker) {
+        this.id = UUID.randomUUID().toString();
+        this.lt = LocalDateTime.now();
+        this.login = login;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+        this.secondName = secondName;
+        this.firstName = firstName;
+        this.patronymic = patronymic;
+        this.age = age;
+        this.isWorker = isWorker;
+    }
+
     public User() {
         this.id = UUID.randomUUID().toString();
         this.lt = LocalDateTime.now();

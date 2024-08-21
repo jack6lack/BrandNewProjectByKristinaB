@@ -4,7 +4,6 @@ import org.junit.jupiter.api.*;
 import ru.innopolis.java.attestation.attestation01.exceptions.InvalidIDException;
 import ru.innopolis.java.attestation.attestation01.exceptions.InvalidNameFormatException;
 import ru.innopolis.java.attestation.attestation01.exceptions.LoginAlreadyTakenException;
-import ru.innopolis.java.attestation.attestation01.model.HandcraftedUser;
 import ru.innopolis.java.attestation.attestation01.model.User;
 
 import java.io.BufferedReader;
@@ -21,33 +20,34 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class UsersRepositoryTest {
     private UsersRepository usersRepository;
-    private List<User> userList = new ArrayList<>();
+    private List<User> userCache = new ArrayList<>();
     private User tempUser;
+
 
     @BeforeAll
     void bigSetUp() {
-        usersRepository = UsersRepositoryImpl.getInstance();
-        userList = usersRepository.findAll();
+        usersRepository = UsersRepositoryFileImpl.getInstance();
+        userCache = usersRepository.findAll();
     }
 
     @AfterAll
     void bigTearDown() {
-        userList.clear();
+        userCache.clear();
     }
 
     @Test
     @Order(1)
     @DisplayName("добавление пользователя с уже существующим логином")
     void createAlreadyExistedUser() {
-        int originalListSize = userList.size();
+        int originalListSize = userCache.size();
         int linesNumber = countLinesNumber();
         try {
-            User newUser = new HandcraftedUser("jack", "qwe123", "qwe123", "Лапкин", "Кристина", "Максимовна", 26, true);
+            User newUser = new User("jack", "qwe123", "qwe123", "Лапкин", "Кристина", "Максимовна", 26, true);
             usersRepository.create(newUser);
         } catch (InvalidNameFormatException | LoginAlreadyTakenException e) {
             System.out.println(e.getMessage());
         }
-        assertEquals(originalListSize, userList.size());
+        assertEquals(originalListSize, userCache.size());
         assertEquals(linesNumber, countLinesNumber());
     }
 
@@ -55,16 +55,16 @@ class UsersRepositoryTest {
     @Order(2)
     @DisplayName("добавление гарантированно нового пользователя")
     void createGuaranteedNewUser() throws InvalidIDException, IOException {
-        int originalListSize = userList.size();
+        int originalListSize = userCache.size();
         int linesNumber = countLinesNumber();
         try {
-            User newUser = new HandcraftedUser(STR."jack\{Math.random()}", "qwe123", "qwe123", "Лапкин", "Кристина", "Максимовна", 26, true);
+            User newUser = new User(STR."jack\{Math.random()}", "qwe123", "qwe123", "Лапкин", "Кристина", "Максимовна", 26, true);
             usersRepository.create(newUser);
             tempUser = newUser;
         } catch (InvalidNameFormatException | LoginAlreadyTakenException e) {
             System.out.println(e.getMessage());
         }
-        assertEquals(originalListSize + 1, userList.size());
+        assertEquals(originalListSize + 1, userCache.size());
         assertEquals(linesNumber + 1, countLinesNumber());
         usersRepository.deleteById(tempUser.getId());
     }
@@ -73,8 +73,8 @@ class UsersRepositoryTest {
     @Order(3)
     @DisplayName("добавление пользователя с некорректными данными")
     void createUserWithIncorrectData() {
-        User notMatchingNamingRulesUser = new HandcraftedUser("jack1", "123qwe", "123qwe", "Лапкин5", "Кри5стина", "Макс5имовна", 26, true);
-        User notMatchingUniqueIDRuleUser = new HandcraftedUser("jack", "123qwe", "123qwe", "Лапкин", "Кристина", "Максимовна", 26, true);
+        User notMatchingNamingRulesUser = new User("jack1", "123qwe", "123qwe", "Лапкин5", "Кри5стина", "Макс5имовна", 26, true);
+        User notMatchingUniqueIDRuleUser = new User("jack", "123qwe", "123qwe", "Лапкин", "Кристина", "Максимовна", 26, true);
         assertAll(
                 () -> assertThrows(InvalidNameFormatException.class, () -> usersRepository.create(notMatchingNamingRulesUser)),
                 () -> assertThrows(LoginAlreadyTakenException.class, () -> usersRepository.create(notMatchingUniqueIDRuleUser))
@@ -101,14 +101,14 @@ class UsersRepositoryTest {
     @Order(6)
     @DisplayName("размер листа точно равен количеству строк в файле")
     void findAll() {
-        assertEquals(userList.size(), countLinesNumber());
+        assertEquals(userCache.size(), countLinesNumber());
     }
 
     @Test
     @Order(7)
     @DisplayName("обновление данных существующему пользователю")
     void updateExistedUser() {
-        int originalListSize = userList.size();
+        int originalListSize = userCache.size();
         int linesNumber = countLinesNumber();
         tempUser = new User("1abe5583-bda4-4954-856e-ec7c01960833", LocalDateTime.now(), "notJack", "789_uio", "789_uio", "Нелапкин", "Некристина", "Немаксимовна", 126, false);
         try {
@@ -116,7 +116,7 @@ class UsersRepositoryTest {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        assertEquals(originalListSize, userList.size());
+        assertEquals(originalListSize, userCache.size());
         assertEquals(linesNumber, countLinesNumber());
     }
 
@@ -124,7 +124,7 @@ class UsersRepositoryTest {
     @Order(8)
     @DisplayName("обновление данных несуществующему пользователю (создание нового)")
     void updateNonExistedUser() {
-        int originalListSize = userList.size();
+        int originalListSize = userCache.size();
         int linesNumber = countLinesNumber();
         tempUser = new User("1abe5583-bdb4-4954-856e-ec7c01960833", LocalDateTime.now(), "notJack1", "789_uio", "789_uio", "Нелапкин", "Некристина", "Немаксимовна", 126, false);
         try {
@@ -132,7 +132,7 @@ class UsersRepositoryTest {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        assertEquals(originalListSize + 1, userList.size());
+        assertEquals(originalListSize + 1, userCache.size());
         assertEquals(linesNumber + 1, countLinesNumber());
     }
 
@@ -140,7 +140,7 @@ class UsersRepositoryTest {
     @Order(9)
     @DisplayName("удаление существующего пользователя")
     void deleteExistedUserById() {
-        int originalListSize = userList.size();
+        int originalListSize = userCache.size();
         int linesNumber = countLinesNumber();
         try {
             usersRepository.deleteById("1abe5583-bdb4-4954-856e-ec7c01960833");
@@ -149,7 +149,7 @@ class UsersRepositoryTest {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        assertEquals(originalListSize - 1, userList.size());
+        assertEquals(originalListSize - 1, userCache.size());
         assertEquals(linesNumber - 1, countLinesNumber());
     }
 
@@ -157,7 +157,7 @@ class UsersRepositoryTest {
     @Order(10)
     @DisplayName("удаление несуществующего пользователя")
     void deleteNonExistedUserById() {
-        int originalListSize = userList.size();
+        int originalListSize = userCache.size();
         int linesNumber = countLinesNumber();
         try {
             usersRepository.deleteById("1abe5583-bdb4-4054-856e-ec7c01960833");
@@ -166,7 +166,7 @@ class UsersRepositoryTest {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        assertEquals(originalListSize, userList.size());
+        assertEquals(originalListSize, userCache.size());
         assertEquals(linesNumber, countLinesNumber());
     }
 
@@ -176,7 +176,7 @@ class UsersRepositoryTest {
     @DisplayName("удаление всех пользователей из файла и листа")
     void deleteAll() {
         usersRepository.deleteAll();
-        assertEquals(0, userList.size());
+        assertEquals(0, userCache.size());
         assertEquals(0, countLinesNumber());
     }
 
