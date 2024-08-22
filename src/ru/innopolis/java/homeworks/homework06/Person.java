@@ -10,40 +10,55 @@ public class Person {
     private char gender;
     private List<Product> shopper = new ArrayList<>();
 
+    public Person() {
+    }
+
     public Person(String name, int cash, char gender) {
 //        this.name = name.replaceAll("\\s", "").toLowerCase();
-        this.name = name;
-        this.cash = cash;
-        this.gender = gender;
+        setName(name);
+        setCash(cash);
+        setGender(gender);
     }
 
     public String getName() {
-        if (this.name == null) {
+        if (!isMatchingNamingRule(this.name)) {
             throw new IllegalArgumentException("Имя не может быть пустым");
         }
         return name;
     }
 
     public void setName(String name) {
+        if (!isMatchingNamingRule(name)) {
+            throw new IllegalArgumentException("Имя не может быть пустым");
+        }
         this.name = name;
     }
 
     public int getCash() {
-        if (this.cash < 0) {
+        if (!isMatchingCashRule(this.cash)) {
             throw new IllegalArgumentException("Деньги не могут быть отрицательными");
         }
         return cash;
     }
 
     public void setCash(int cash) {
+        if (!isMatchingCashRule(cash)) {
+            throw new IllegalArgumentException("Деньги не могут быть отрицательными");
+        }
         this.cash = cash;
     }
 
     public char getGender() {
+        if (!isMatchingGenderRule(this.gender)) {
+            throw new IllegalArgumentException("вы не можете быть вертолетом апач");
+        }
         return gender;
     }
 
     public void setGender(char gender) {
+        if (!isMatchingGenderRule(gender)) {
+            throw new IllegalArgumentException("вы не можете быть вертолетом апач");
+        }
         this.gender = gender;
     }
 
@@ -51,10 +66,27 @@ public class Person {
         return shopper;
     }
 
+    public void setShopper(List<Product> shopper) {
+        this.shopper = shopper;
+    }
+
     public void addToShopper(Product product, List<Product> shopper) {
         this.shopper = shopper;
         shopper.add(product);
     }
+
+    private boolean isMatchingNamingRule(String string) {
+        return string != null && !string.isBlank();
+    }
+
+    private boolean isMatchingGenderRule(char gender) {
+        return gender == 'f' || gender == 'm';
+    }
+
+    private boolean isMatchingCashRule(int cash) {
+        return cash >= 0;
+    }
+
 
     @Override
     public boolean equals(Object o) {
