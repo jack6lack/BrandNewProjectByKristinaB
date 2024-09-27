@@ -1,14 +1,17 @@
-package ru.innopolis.java.homeworks.homework06.support;
+package ru.innopolis.java.homeworks.homework07.support;
 
-import ru.innopolis.java.homeworks.homework06.product.DiscountProduct;
-import ru.innopolis.java.homeworks.homework06.product.RegularProduct;
-import ru.innopolis.java.homeworks.homework06.ppl.Adults;
-import ru.innopolis.java.homeworks.homework06.ppl.Person;
+import ru.innopolis.java.homeworks.homework07.product.DiscountProduct;
+import ru.innopolis.java.homeworks.homework07.product.RegularProduct;
+import ru.innopolis.java.homeworks.homework07.ppl.Adults;
+import ru.innopolis.java.homeworks.homework07.ppl.Person;
 
 public class ShoppingHandler {
 
+    private ShoppingHandler() {
+    }
+
     public static boolean buyinForMoney(Person person, RegularProduct regularProduct) {
-        double thinnerCash = person.getCash() - regularProduct.getPrice();
+        Double thinnerCash = person.getCash() - regularProduct.getPrice();
         if (thinnerCash < 0) {
             if (person instanceof Adults) {
                 person.setCash(thinnerCash);
@@ -23,8 +26,8 @@ public class ShoppingHandler {
     }
 
     public static boolean buyinForMoney(Person person, DiscountProduct discountProduct, DiscountAmountHandler dah) {
-        double thinnerCash = person.getCash() - (discountProduct.getPrice() - (dah.getDiscountAmount() != 0 ?
-                discountProduct.getPrice() / 100 * dah.getDiscountAmount() : 0));
+//        person.setDiscountAmountHandler(dah);
+        Double thinnerCash = person.getCash() - (discountProduct.getPrice() - (discountProduct.getPrice() / 100 * dah.getDiscountAmount()));
         if (thinnerCash < 0) {
             if (person instanceof Adults) {
                 person.setCash(thinnerCash);
@@ -36,6 +39,7 @@ public class ShoppingHandler {
             person.setCash(thinnerCash);
             return true;
         }
+
     }
 
     public static void addinToShopper(Person person, RegularProduct regularProduct) {

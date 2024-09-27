@@ -1,13 +1,13 @@
-package ru.innopolis.java.homeworks.homework06.product;
+package ru.innopolis.java.homeworks.homework07.product;
 
 import java.util.Objects;
 
 public class RegularProduct implements Product {
 
     private String nameOfProduct;
-    private double price;
+    private Double price;
 
-    public RegularProduct(String nameOfProduct, int price) {
+    public RegularProduct(String nameOfProduct, Double price) {
 //        this.nameOfProduct = nameOfProduct.replaceAll("\\s", "").toLowerCase();
         this.nameOfProduct = nameOfProduct;
         this.price = price;
@@ -17,13 +17,14 @@ public class RegularProduct implements Product {
     public String getNameOfProduct() {
         if (!isMatchesNamingRule(this.nameOfProduct)) {
             System.out.println(this.nameOfProduct + " - недопустимое имя продукта!");
+            return null;
+        } else {
+            return this.nameOfProduct;
         }
-        return this.nameOfProduct;
-
     }
 
     @Override
-    public double getPrice() {
+    public Double getPrice() {
         if (!isMatchesPricingRule(this.price)) {
             System.out.println(this.nameOfProduct + " - недопустимая стоимость продукта!");
         }
@@ -39,7 +40,7 @@ public class RegularProduct implements Product {
     }
 
     @Override
-    public boolean isMatchesPricingRule(double priceForCheck) {
+    public boolean isMatchesPricingRule(Double priceForCheck) {
         if (priceForCheck <= 0) {
             return false;
         }

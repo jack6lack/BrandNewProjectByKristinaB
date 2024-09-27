@@ -1,4 +1,4 @@
-package ru.innopolis.java.homeworks.homework06.ppl;
+package ru.innopolis.java.homeworks.homework07.ppl;
 
 import java.util.Objects;
 
@@ -6,13 +6,13 @@ public class Children extends Person {
     private boolean ableToBuy;
 
 
-    public Children(String name, double cash, char gender, int age) {
+    public Children(String name, Double cash, Character gender, Integer age) {
         super(name, cash, gender, age);
         checkAge(age);
     }
 
     @Override
-    public double getCash() {
+    public Double getCash() {
         if (ableToBuy) {
             if (super.getCash() < 0) {
                 System.out.println("баланс не может быть отрицательным");
@@ -20,11 +20,11 @@ public class Children extends Person {
             return super.getCash();
         } else {
             System.out.println("у этого персонажа нет денег");
-            return 0;
+            return 0.0;
         }
     }
 
-    private void checkAge(int age) {
+    private void checkAge(Integer age) {
         if (age < 0 || age > 17) {
             throw new IllegalArgumentException("указан некорректный возраст");
         } else if (age < 6) {
@@ -53,6 +53,6 @@ public class Children extends Person {
 
     @Override
     public String toString() {
-        return (ableToBuy ? "" : "'" + super.getName() + "' не имеет возможности делать покупки\n") + super.toString();
+        return (ableToBuy ? "" : super.getName() + " не имеет возможности делать покупки\n") + super.toString();
     }
 }
