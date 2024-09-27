@@ -1,5 +1,9 @@
 package ru.innopolis.java.homeworks.homework10;
 
+import ru.innopolis.java.homeworks.homework10.add.Pair;
+import ru.innopolis.java.homeworks.homework10.main.ByCondition;
+import ru.innopolis.java.homeworks.homework10.main.Sequence;
+
 import java.util.Arrays;
 
 public class Main {

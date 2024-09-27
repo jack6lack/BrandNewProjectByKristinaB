@@ -25,9 +25,6 @@ public class Person {
     }
 
     public int getCash() {
-        if (this.cash < 0) {
-            throw new IllegalArgumentException("Деньги не могут быть отрицательными");
-        }
         return cash;
     }
 
