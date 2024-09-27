@@ -1,40 +1,43 @@
 package ru.innopolis.java.homeworks.homework08.support;
 
-import ru.innopolis.java.homeworks.homework08.ppl.Children;
-import ru.innopolis.java.homeworks.homework08.ppl.Person;
-import ru.innopolis.java.homeworks.homework08.product.Product;
-import ru.innopolis.java.homeworks.homework08.product.RegularProduct;
+
+import ru.innopolis.java.homeworks.homework08.Person;
+import ru.innopolis.java.homeworks.homework08.Product;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TxtDataHandler {
 
-    public static ArrayList<Person> readPersonsMakeList(String line) {
-        ArrayList<Person> personArrayList = new ArrayList<>();
+    private TxtDataHandler() {
+    }
+
+    public static List<Person> readPersonsMakeList(String line) {
+        List<Person> personArrayList = new ArrayList<>();
         StringBuilder sb = new StringBuilder(line);
         while (!sb.isEmpty()) {
-            int i = sb.indexOf(";");
-            int j = sb.indexOf("=");
+            Integer i = sb.indexOf(";");
+            Integer j = sb.indexOf("=");
             String personData = sb.substring(0, i).trim();
             String personName = personData.substring(0, j).trim();
-            double personCash = Double.parseDouble(personData.substring(j + 1).trim());
-            Person person = new Children(personName, personCash, 'm', 17);
+            Integer personCash = Integer.parseInt(personData.substring(j + 1).trim());
+            Person person = new Person(personName, personCash, 'm');
             personArrayList.add(person);
             sb.delete(0, i + 1);
         }
         return personArrayList;
     }
 
-    public static ArrayList<Product> readProductsMakeList(String line) {
-        ArrayList<Product> productArrayList = new ArrayList<>();
+    public static List<Product> readProductsMakeList(String line) {
+        List<Product> productArrayList = new ArrayList<>();
         StringBuilder sb = new StringBuilder(line);
         while (!sb.isEmpty()) {
-            int i = sb.indexOf(";");
-            int j = sb.indexOf("=");
+            Integer i = sb.indexOf(";");
+            Integer j = sb.indexOf("=");
             String productData = sb.substring(0, i).trim();
             String productName = productData.substring(0, j).trim();
-            double productPrice = Double.parseDouble(productData.substring(j + 1).trim());
-            Product product = new RegularProduct(productName, (int) productPrice);
+            Integer productPrice = Integer.parseInt(productData.substring(j + 1).trim());
+            Product product = new Product(productName, productPrice);
             productArrayList.add(product);
             sb.delete(0, i + 1);
         }
