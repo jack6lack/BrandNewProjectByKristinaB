@@ -1,0 +1,83 @@
+-- Создание пользователей
+INSERT INTO users (id, character_name, character_race, character_class, deleted)
+VALUES (1, 'Dovahkiin', 'Nord', 'Dragonborn', false),
+       (2, 'Ulfric Stormcloak', 'Nord', 'Warrior', false),
+       (3, 'Serana', 'Nord', 'Vampire', false),
+       (4, 'Alduin', 'Dragon', 'Dragon', false),
+       (5, 'Lydia', 'Nord', 'Warrior', false),
+       (6, 'Mjoll the Lioness', 'Nord', 'Warrior', false),
+       (7, 'Parthunaax', 'Dragon', 'Dragon', false),
+       (8, 'Esbern', 'Nord', 'Mage', false),
+       (9, 'Delphine', 'Nord', 'Warrior', false),
+       (10, 'Faendal', 'Wood Elf', 'Archer', false),
+       (11, 'Aela the Huntress', 'Nord', 'Hunter', false),
+       (12, 'Farkas', 'Nord', 'Warrior', false),
+       (13, 'Vilkas', 'Nord', 'Warrior', false),
+       (14, 'Balgruuf the Greater', 'Nord', 'Jarl', false),
+       (15, 'Astrid', 'Nord', 'Assassin', false),
+       (16, 'Cicero', 'Imperial', 'Jester', false),
+       (17, 'Breezehome', 'Nord', 'Home', false),
+       (18, 'Maven Black-Briar', 'Nord', 'Noble', false),
+       (19, 'Nazeem', 'Redguard', 'Noble', false),
+       (20, 'Erandur', 'Nord', 'Priest', false);
+
+-- Создание характеристик для пользователей
+INSERT INTO characteristic (users_id, strength, defense, deleted)
+VALUES (1, 100, 50, false),
+       (2, 90, 60, false),
+       (3, 80, 55, false),
+       (4, 110, 40, false),
+       (5, 85, 45, false),
+       (6, 95, 65, false),
+       (7, 120, 70, false),
+       (8, 75, 50, false),
+       (9, 65, 55, false),
+       (10, 80, 50, false),
+       (11, 90, 60, false),
+       (12, 85, 65, false),
+       (13, 95, 55, false),
+       (14, 100, 70, false),
+       (15, 70, 40, false),
+       (16, 60, 30, false),
+       (17, 80, 50, false),
+       (18, 90, 65, false),
+       (19, 75, 55, false),
+       (20, 85, 60, false);
+
+-- Создание игр
+INSERT INTO game (id, player_id, opponent_id, deleted)
+VALUES (1, 1, 2, false),
+       (2, 3, 4, false),
+       (3, 1, 5, false),
+       (4, 6, 7, false),
+       (5, 8, 9, false),
+       (6, 10, 11, false),
+       (7, 12, 13, false),
+       (8, 14, 15, false),
+       (9, 16, 17, false),
+       (10, 18, 19, false),
+       (11, 20, 1, false),
+       (12, 2, 3, false);
+
+-- Создание результатов игр
+INSERT INTO results (id, game_id, player_id, opponent_id, result, battle_date, deleted)
+VALUES (1, 1, 1, 2, 'WIN', '2024-10-01 12:00:00', false),
+       (2, 2, 3, 4, 'LOSS', '2024-10-02 12:00:00', false),
+       (3, 3, 1, 5, 'WIN', '2024-10-03 12:00:00', false),
+       (4, 4, 6, 7, 'LOSS', '2024-10-04 12:00:00', false),
+       (5, 5, 8, 9, 'WIN', '2024-10-05 12:00:00', false),
+       (6, 6, 10, 11, 'WIN', '2024-10-06 12:00:00', false),
+       (7, 7, 12, 13, 'LOSS', '2024-10-07 12:00:00', false),
+       (8, 8, 14, 15, 'WIN', '2024-10-08 12:00:00', false),
+       (9, 9, 16, 17, 'LOSS', '2024-10-09 12:00:00', false),
+       (10, 10, 10, 12, 'WIN', '2024-10-10 12:00:00', false),
+       (11, 11, 11, 13, 'LOSS', '2024-10-11 12:00:00', false),
+       (12, 12, 12, 14, 'WIN', '2024-10-12 12:00:00', false),
+       (13, 1, 1, 3, 'LOSS', '2024-10-13 12:00:00', false),
+       (14, 2, 2, 4, 'WIN', '2024-10-14 12:00:00', false),
+       (15, 3, 3, 5, 'WIN', '2024-10-15 12:00:00', false),
+       (16, 4, 4, 6, 'LOSS', '2024-10-16 12:00:00', false),
+       (17, 5, 5, 7, 'WIN', '2024-10-17 12:00:00', false),
+       (18, 6, 6, 8, 'WIN', '2024-10-18 12:00:00', false),
+       (19, 7, 7, 9, 'LOSS', '2024-10-19 12:00:00', false),
+       (20, 8, 8, 10, 'WIN', '2024-10-20 12:00:00', false);
