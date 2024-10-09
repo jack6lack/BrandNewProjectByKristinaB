@@ -1,0 +1,31 @@
+version: '3.1'
+
+services:
+
+  app:
+    container_name: bizarre-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/mini_games_db
+      SPRING_DATASOURCE_USERNAME: kris
+      SPRING_DATASOURCE_PASSWORD: QWERTY
+    depends_on:
+      - db
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: kris
+      POSTGRES_PASSWORD: QWERTY
+      POSTGRES_DB: mini_games_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
